@@ -226,68 +226,63 @@ module Keyboard_Reader (
  *                              Internal Modules                             *
  *****************************************************************************/
 
-			 PS2_Controller PS2 (
-			 	// Inputs
-				.CLOCK_50        (clk       ),
-				.reset           (reset          ),
+				PS2_Controller PS2 (
+					// Inputs
+					.CLOCK_50        (clk            ),
+					.reset           (reset          ),
+					
+					// Bidirectionals
+					.PS2_CLK         (PS2_CLK        ),
+					.PS2_DAT         (PS2_DAT        ),
+					
+					//Outputs
+					.received_data   (ps2_key_data   ),
+					.received_data_en(ps2_key_pressed)
+				);
 
-			 	// Bidirectionals
-			 	.PS2_CLK         (PS2_CLK        ),
-				.PS2_DAT         (PS2_DAT        ),
+				// Keyboard_Input_Shift i_KeyBoard_Input_Shift (
+				// 	.num_char          (char_num          ),
+				// 	.sequence          (sequence          ),
+				// 	.resetn            (resetn            ),
+				// 	.get_next_character(get_next_character),
+				// 	.clk               (clk               ),
+				// 	.char_num          (char_num          ),
+				// 	.comparison_data   (comparison_data   )
+				// );
 
-			//Outputs
-		 	.received_data   (ps2_key_data   ),
-			 	.received_data_en(ps2_key_pressed)
-			);
-			
-			
-			
-			
+				hex_decoder i_hex_decoder0 (
+					.hex_digit(correct_keystroke_count[3:0]),
+					.segments (HEX0                        )
+				);
 
+				hex_decoder i_hex_decoder1 (
+					.hex_digit(total_keystroke_count[3:0]),
+					.segments (HEX2                      )
+				);
 
+				hex_decoder i_hex_decoder2 (
+					.hex_digit(current_state),
+					.segments (HEX4         )
+				);
 
-			// Keyboard_Input_Shift i_KeyBoard_Input_Shift (
-			// 	.num_char          (char_num          ),
-			// 	.sequence          (sequence          ),
-			// 	.resetn            (resetn            ),
-			// 	.get_next_character(get_next_character),
-			// 	.clk               (clk               ),
-			// 	.char_num          (char_num          ),
-			// 	.comparison_data   (comparison_data   )
-			// );
-
-							hex_decoder i_hex_decoder0 (
-							 	.hex_digit(correct_keystroke_count[3:0]),
-							 	.segments (HEX0                        )
-							 );
-
-							 hex_decoder i_hex_decoder1 (
-							 	.hex_digit(total_keystroke_count[3:0]),
-							 	.segments (HEX2                  )
-							 );
-							 
-							 							 hex_decoder i_hex_decoder2 (
-							 	.hex_digit(current_state),
-							 	.segments (HEX4                   )
-							 );
-
-	Keyboard_Parser i_Keyboard_Parser (
-		.clk               (clk               ),
-		.resetn            (resetn            ),
-		.get_next_character(get_next_character),
-		.enable_next_level (enable_next_level ),
-		.num_char          (num_char          ),
-		.comparison_data   (comparison_data   )
-	);
+				Keyboard_Parser i_Keyboard_Parser (
+					.clk               (clk               ),
+					.resetn            (resetn            ),
+					.get_next_character(get_next_character),
+					.enable_next_level (enable_next_level ),
+					.num_char          (num_char          ),
+					.comparison_data   (comparison_data   )
+				);
 
 
-			timer_3s i_timer_3s (
-				.clk              (clk              ),
-				.q                (timer_done       ),
-				.enable_next_level(enable_next_level),
-				.enable           (enable_timer     ),
-				.resetn           (resetn           )
-			);
-			endmodule
+				timer_3s i_timer_3s (
+					.clk              (clk              ),
+					.q                (timer_done       ),
+					.enable_next_level(enable_next_level),
+					.enable           (enable_timer     ),
+					.num_char         (num_char         ),
+					.resetn           (resetn           )
+				);
+				endmodule
 
 
