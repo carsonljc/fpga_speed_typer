@@ -1,4 +1,4 @@
-omodule datapath_draw (
+module datapath_draw (
 	input             clk                 ,
 	input             resetn              ,
 	input      [ 5:0] colour_input        ,
@@ -18,6 +18,7 @@ omodule datapath_draw (
 
 	reg [8:0] x_start;
 	reg [8:0] y_start;
+	reg [5:0]colour_buffer;
 
 	// input registers
 
@@ -39,7 +40,7 @@ omodule datapath_draw (
 			if(ld_block) begin
 				x_start <= x_input;
 				y_start <= y_input;
-				colour  <= colour_input;
+				colour_buffer  <= colour_input;
 			end
 			//change lower half to black
 			if(ld_black) begin
@@ -49,19 +50,21 @@ omodule datapath_draw (
 				x_start <= 9'd10;
 				y_start <= 9'd200;
 				//black
-				colour  <= 6'b000;
+				colour_buffer  <= 6'b000;
 			end
 			//incrementing the counter for drawing a square
 			if(enable_counter) begin
 				counter <= counter + 1;
 				x       <= x_start + counter[1:0];
 				y       <= y_start + counter[3:2];
+				colour   <= colour_buffer;
 			end
 			//incrementing the counter for clearing screen
 			if(enable_clear_counter) begin
 				clear_counter <= clear_counter + 1;
 				x             <= x_start + clear_counter[7:0];
 				y             <= y_start + clear_counter[14:8];
+				colour   <= colour_buffer;
 			end
 		end
 	end // always@(posedge clk)

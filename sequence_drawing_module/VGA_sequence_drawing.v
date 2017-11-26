@@ -2,7 +2,7 @@ module VGA_sequence_drawing (
 	input         clk                   , // Clock
 	input         resetn                , // Asynchronous reset active low
 	input  [ 7:0] num_char              ,
-	input  [87:0] sequence_             ,
+	input  [95:0] sequence_             ,
 	input  [ 8:0] x_start               ,
 	input  [ 8:0] y_start               ,
 	input         enable_clear          ,
@@ -50,6 +50,7 @@ module VGA_sequence_drawing (
 	);
 
 	wire [7:0] address;
+		assign address = character_;
 
 	VGA_character_drawing i_VGA_character_drawing (
 		.clk                     (clk                     ),
@@ -66,14 +67,14 @@ module VGA_sequence_drawing (
 		.writeEn                 (writeEn                 )
 	);
 
-	assign address = character_;
+
 
 endmodule
 
 module VGA_SEQUENCE_DATAPATH (
 	input             clk           , // Clock
 	input             rst_n         , // Asynchronous reset active low
-	input      [87:0] sequence_     ,
+	input      [95:0] sequence_     ,
 	input             ld_sequence   ,
 	input             shift_sequence,
 	input      [ 8:0] x_start       ,
@@ -83,7 +84,7 @@ module VGA_SEQUENCE_DATAPATH (
 	output reg [ 7:0] character_
 );
 
-	reg [87:0] sequence_wire;
+	reg [95:0] sequence_wire;
 
 	always@(posedge clk) begin
 		if (!rst_n) begin
@@ -97,11 +98,11 @@ module VGA_SEQUENCE_DATAPATH (
 			y_input       <= y_start;
 		end
 		else if (shift_sequence) begin
-			sequence_wire <= (sequence_wire << 87'd8);
+			sequence_wire <= (sequence_wire << 8);
 			x_input       <= x_input + (8'd24);
 		end
-		character_ <= sequence_wire[87:80];
-	end // always@(posedge clk)
+		character_ <= sequence_wire[95:88];
+	end
 
 endmodule
 
@@ -123,8 +124,9 @@ module VGA_SEQUENCE_CONTROL (
 	localparam
 		S_WAIT_START_SEQUENCE = 3'd0,
 			S_LOAD_SEQUENCE = 3'd1,
-				S_WAIT_CHARACTER_PLOT = 3'd2,
-					S_LOAD_NEXT_CHARACTER = 3'd3;
+			S_START_PLOT = 3'd2,
+				S_WAIT_CHARACTER_PLOT = 3'd3,
+					S_LOAD_NEXT_CHARACTER = 3'd4;
 
 
 	always@(posedge clk) begin : proc_current_state
@@ -136,57 +138,60 @@ module VGA_SEQUENCE_CONTROL (
 	end
 
 	always @(*) begin : proc_current_state_next
-
 		case (current_state)
 			S_WAIT_START_SEQUENCE : next_state = (plot_sequence) ? S_LOAD_SEQUENCE : S_WAIT_START_SEQUENCE;
-				S_LOAD_SEQUENCE       : next_state = S_WAIT_CHARACTER_PLOT;
+			S_LOAD_SEQUENCE       : next_state = S_START_PLOT;
+			S_START_PLOT : next_state = S_WAIT_CHARACTER_PLOT;
 			S_WAIT_CHARACTER_PLOT :
 				begin
-					if (ready_to_start_character) begin
+					if (ready_to_start_character || character_plotted == num_char) begin
 						if (character_plotted == num_char)
 							next_state = S_WAIT_START_SEQUENCE;
-						else
+						else //if (character_plotted > 0)
 							next_state = S_LOAD_NEXT_CHARACTER;
-						end
-						else
-							next_state = S_WAIT_CHARACTER_PLOT;
 					end
-					S_LOAD_NEXT_CHARACTER : next_state = S_WAIT_CHARACTER_PLOT;
-
-					default : next_state = S_WAIT_START_SEQUENCE;
-					endcase
+					else
+						next_state = S_WAIT_CHARACTER_PLOT;
 				end
+			S_LOAD_NEXT_CHARACTER : next_state = S_START_PLOT;
+			default               : next_state = S_WAIT_START_SEQUENCE;
+		endcase
+	end
 
 			always @(*) begin: enable_signals
-				ld_sequence = 1'b0;
-				shift_sequence = 1'b0;
+				ld_sequence           = 1'b0;
+				shift_sequence        = 1'b0;
 				enable_character_plot = 1'b0;
 				case (current_state)
-				S_WAIT_START_SEQUENCE :
-					begin
-						ready_to_plot_sequence = 1'b1;
-					end
-				S_LOAD_SEQUENCE:
-					begin
-						ld_sequence = 1'b1;
-					end
-				S_WAIT_CHARACTER_PLOT:
-					begin
-						enable_character_plot = 1'b1;
-					end
-				S_LOAD_NEXT_CHARACTER:
-					begin
-						shift_sequence = 1'b1;
-					end
+					S_WAIT_START_SEQUENCE :
+						begin
+							ready_to_plot_sequence = 1'b1;
+						end
+					S_LOAD_SEQUENCE :
+						begin
+							ld_sequence = 1'b1;
+						end
+					S_START_PLOT :
+						begin
+							enable_character_plot = 1'b1;
+						end
+					S_WAIT_CHARACTER_PLOT :
+						begin
+							enable_character_plot = 1'b1;
+						end
+					S_LOAD_NEXT_CHARACTER :
+						begin
+							shift_sequence = 1'b1;
+						end
 				endcase // current_state
 			end
 
 
 			always@(posedge clk) begin
 				if (current_state == S_WAIT_START_SEQUENCE) begin
-					character_plotted <= 0;
+					character_plotted <= 1;
 				end
-				else if(current_state == S_LOAD_NEXT_CHARACTER) begin
+				else if(current_state == S_LOAD_NEXT_CHARACTER ) begin
 					character_plotted <= character_plotted + 1;
 				end
 			end

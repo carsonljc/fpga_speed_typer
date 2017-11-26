@@ -25,10 +25,10 @@ module control_draw (
 
     localparam
         S_WAIT_START = 5'd0,
-            S_LOAD_VALUES = 5'd1,
-                S_LOAD_BLACK = 5'd2,
-                    S_DRAW_BLACK = 5'd3,
-                        S_DRAW_BLOCK = 5'd4;
+        S_LOAD_VALUES = 5'd1,
+        S_LOAD_BLACK = 5'd2,
+        S_DRAW_BLACK = 5'd3,
+        S_DRAW_BLOCK = 5'd4;
 
     // Next state logic aka our state table
     always@(*)

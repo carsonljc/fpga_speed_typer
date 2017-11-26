@@ -74,18 +74,24 @@ module char_coordinate (
 				x_start <= x_input;
 				y_start <= y_input;
 			end // if (ld_)
-			if (enable_counter) begin
+			else if (enable_counter) begin
 				if (counter[2:0] == 3'b100) begin
 					counter[5:3] <= counter[5:3] +1;
 					counter[2:0] <= 0;
 				end
 				else counter <= counter + 1;
-				y <= x_start + (4*counter[5:3]);
-				x <= y_start + (4*counter [2:0]);
+				y <= y_start + (4*counter[5:3]);
+				x <= x_start + (4*counter[2:0]);
 			end // if (enable_counter)
 		end // else
 	end // always@(posedge clk)
 endmodule // datapath_sequence
+
+
+
+
+
+
 
 
 //gets next pixel colour on enable
