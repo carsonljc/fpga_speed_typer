@@ -97,3 +97,7 @@ module control_draw (
                 current_state <= next_state;
         end // state_FFS
 endmodule
+
+
+
+
