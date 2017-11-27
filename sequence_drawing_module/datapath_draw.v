@@ -40,17 +40,19 @@ module datapath_draw (
 			if(ld_block) begin
 				x_start <= x_input;
 				y_start <= y_input;
+				x <= x_input;
+				y <= y_input;
 				colour_buffer  <= colour_input;
 			end
 			//change lower half to black
 			if(ld_black) begin
-				x       <= 9'b0;
-				y       <= 9'b0;
+				x       <= 9'd9;
+				y       <= 9'd166;
 				//change x_start to 105 to take up the bottom 35 pixels
-				x_start <= 9'd10;
-				y_start <= 9'd200;
+				x_start <= 9'd9;
+				y_start <= 9'd166;
 				//black
-				colour_buffer  <= 6'b000;
+				colour_buffer  <= 0;
 			end
 			//incrementing the counter for drawing a square
 			if(enable_counter) begin
@@ -61,9 +63,15 @@ module datapath_draw (
 			end
 			//incrementing the counter for clearing screen
 			if(enable_clear_counter) begin
-				clear_counter <= clear_counter + 1;
-				x             <= x_start + clear_counter[7:0];
-				y             <= y_start + clear_counter[14:8];
+				if(clear_counter[8:0] >= 302) begin
+					clear_counter[15:9] <= clear_counter[15:9] + 1;
+					clear_counter[8:0] <= 0;
+				end
+				else begin
+					clear_counter <= clear_counter + 1;
+				end	
+				x             <= x_start + clear_counter[8:0];
+				y             <= y_start + clear_counter[15:9];
 				colour   <= colour_buffer;
 			end
 		end

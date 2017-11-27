@@ -1,17 +1,17 @@
 module datapath_sequence (
-	input clk,    // Clock
-	input rst_n,  // Asynchronous reset active low
-	input [7:0] address,
-	input ld_colour,
-	input next_colour,
-	input ld_value,
-	input reset_counter,
-	input enable_counter,
-	input [8:0] x_input,
-	input [8:0] y_input,
-	output [8:0] x,
-	output [8:0] y,
-	output [5:0] colour_out,
+	input        clk           , // Clock
+	input        rst_n         , // Asynchronous reset active low
+	input  [7:0] address       ,
+	input        ld_colour     ,
+	input        next_colour   ,
+	input        ld_value      ,
+	input        reset_counter ,
+	input        enable_counter,
+	input  [8:0] x_input       ,
+	input  [8:0] y_input       ,
+	output [8:0] x             ,
+	output [8:0] y             ,
+	output [5:0] colour_out    ,
 	output [5:0] counter
 );
 
@@ -54,10 +54,10 @@ module char_coordinate (
 	input            ld_value      ,
 	input            reset_counter ,
 	input            enable_counter,
-	input [8:0]x_input,
-	input [8:0]y_input,
+	input      [8:0] x_input       ,
+	input      [8:0] y_input       ,
 	output reg [8:0] x             ,
-	output reg [8:0] y ,
+	output reg [8:0] y             ,
 	output reg [5:0] counter
 );
 	reg [8:0] x_start;
@@ -73,6 +73,8 @@ module char_coordinate (
 			if (ld_value) begin
 				x_start <= x_input;
 				y_start <= y_input;
+				y <= y_input;
+				x <= x_input;
 			end // if (ld_)
 			else if (enable_counter) begin
 				if (counter[2:0] == 3'b100) begin
@@ -80,8 +82,8 @@ module char_coordinate (
 					counter[2:0] <= 0;
 				end
 				else counter <= counter + 1;
-				y <= y_start + (4*counter[5:3]);
-				x <= x_start + (4*counter[2:0]);
+			y <= y_start + (4*counter[5:3]);
+			x <= x_start + (4*counter[2:0]);
 			end // if (enable_counter)
 		end // else
 	end // always@(posedge clk)
@@ -117,7 +119,7 @@ module char_colour (
 		else if(next_colour) begin
 			colour <= (colour<<24'd1);
 		end
-		colour_out <= (colour[24]) ? 6'b000000 : 6'b111111;
+		colour_out <= (!colour[24]) ? 6'b000000 : 6'b111111;
 	end // always@(clk)
 
 endmodule
