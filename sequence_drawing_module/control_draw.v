@@ -25,10 +25,10 @@ module control_draw (
 
     localparam
         S_WAIT_START = 5'd0,
-        S_LOAD_VALUES = 5'd1,
-        S_LOAD_BLACK = 5'd2,
-        S_DRAW_BLACK = 5'd3,
-        S_DRAW_BLOCK = 5'd4;
+            S_LOAD_VALUES = 5'd1,
+                S_LOAD_BLACK = 5'd2,
+                    S_DRAW_BLACK = 5'd3,
+                        S_DRAW_BLOCK = 5'd4;
 
     // Next state logic aka our state table
     always@(*)
@@ -45,7 +45,7 @@ module control_draw (
                     end
                 S_LOAD_VALUES : next_state = S_DRAW_BLOCK;
                 S_LOAD_BLACK  : next_state = S_DRAW_BLACK;
-                S_DRAW_BLACK  : next_state = (clear_counter == 16'd19200) ? S_WAIT_START : S_DRAW_BLACK;
+                S_DRAW_BLACK  : next_state = (clear_counter[15:9] >= 66) ? S_WAIT_START : S_DRAW_BLACK;
                 S_DRAW_BLOCK  : next_state = (counter == 5'b10000) ? S_WAIT_START : S_DRAW_BLOCK;
                 default       : next_state = S_WAIT_START;
             endcase
@@ -64,12 +64,11 @@ module control_draw (
             ready_to_draw        = 1'b0;
 
             case (current_state)
-                S_WAIT_START  : begin 
+                S_WAIT_START : begin
                     ready_to_draw = 1'b1;
                     reset_counter = 1'b1;
                 end
                 S_LOAD_VALUES : begin
-
                     ld_block = 1'b1;
                 end
                 S_LOAD_BLACK : begin
