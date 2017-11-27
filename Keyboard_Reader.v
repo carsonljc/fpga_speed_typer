@@ -38,16 +38,15 @@ module Keyboard_Reader (
 		READER_STATE_5_MATCH = 4'd5,
 		READER_STATE_6_CHECK = 4'd6,
 		READER_STATE_7_OUTPUT = 4'd7,
-		READER_STATE_8_FAIL = 4'd8;
+		READER_STATE_8_FAIL = 4'd8,
+		RESET_GAME = 4'd9;
 
 /*****************************************************************************
 	*                 Internal wires and registers Declarations                 *
 	*****************************************************************************/
 
 	// Internal Wires
-	wire resetn;
-	//wire reset;
-	// wire reset ;
+	wire       resetn           ;
 	reg        enable_next_level;
 	wire       ps2_key_pressed  ;
 	wire [7:0] ps2_key_data     ;
@@ -55,8 +54,8 @@ module Keyboard_Reader (
 	wire       timer_done       ;
 	wire [7:0] num_char         ;
 	wire       start_read       ;
-	reg 	ld_difficulty;
-	wire [1:0] difficulty; 
+	reg        ld_difficulty    ;
+	wire [1:0] difficulty       ;
 	// wire [87:0]sequence;
 	// Internal Registers
 	reg        finished               ;
@@ -72,8 +71,8 @@ module Keyboard_Reader (
 	reg  [3:0] current_state          ;
 	reg  [3:0] next_state             ;
 	reg  [7:0] correct_keystroke_count;
-
-	assign clk = CLOCK_50;
+	reg        game_reset             ;
+	reg        board_resetn           ;
 
 /*****************************************************************************
 	*                         Finite State Machine(s)                           *
@@ -81,14 +80,20 @@ module Keyboard_Reader (
 
 	always @(*) begin : state_table
 		case (current_state)
+			//state that is only active on when reset, to select the difficulty
 			READER_STATE_SELECT_DIFFICULTY : 
 				begin
 					next_state = (last_data_received == 8'h16 || last_data_received == 8'h1E || last_data_received == 8'h26) ? READER_STATE_0_WAIT : READER_STATE_SELECT_DIFFICULTY;
 				end
-			READER_STATE_0_WAIT : next_state = (start_read) ? READER_STATE_1_NEW : READER_STATE_0_WAIT;
+			//state to wait for the user to start the game, waits until the user presses <enter> to start
+			READER_STATE_0_WAIT : next_state = (last_data_received == 8'h5A) ? READER_STATE_1_NEW : READER_STATE_0_WAIT;
+			//loads a new level
 			READER_STATE_1_NEW  : next_state = READER_STATE_DRAW_SEQUENCE_ON_SCREEN;
+			//sets the registers to start printing a sequence on the screen
 			READER_STATE_DRAW_SEQUENCE_ON_SCREEN : next_state = READER_STATE_WAIT_SEQUENCE_ON_SCREEN;
+			//waits until the sequence has been printed on the screen
 			READER_STATE_WAIT_SEQUENCE_ON_SCREEN : next_state = (ready_to_plot_sequence) ? READER_STATE_2_IDLE : READER_STATE_WAIT_SEQUENCE_ON_SCREEN;
+			//waits until the user presses a button to start the timer and reading of the game
 			READER_STATE_2_IDLE :
 				begin
 					if (timer_done)
@@ -96,31 +101,37 @@ module Keyboard_Reader (
 					else
 						next_state = (ps2_key_pressed) ? READER_STATE_3_READ : READER_STATE_2_IDLE;
 				end
+			//accepts input
 			READER_STATE_3_READ :
 				begin
 					next_state = READER_STATE_4_COMPARE;
 				end
+			//compares the input
 			READER_STATE_4_COMPARE :
 				begin
 					next_state = (last_data_received == comparison_data) ? READER_STATE_5_MATCH : READER_STATE_2_IDLE;
 				end
+			//input matches
 			READER_STATE_5_MATCH :
 				begin
 					next_state = READER_STATE_6_CHECK;
 				end
+			//check if all possible have been entered
 			READER_STATE_6_CHECK :
 				begin
 					next_state = (correct_keystroke_count == num_char) ? READER_STATE_7_OUTPUT : READER_STATE_2_IDLE;
 				end
+			//if the user has entered a correct sequence then we print out a level screen
 			READER_STATE_7_OUTPUT :
 				begin
 					next_state = READER_STATE_0_WAIT;
 				end
+			//user failed, wait for reset
 			READER_STATE_8_FAIL :
 				begin
-					next_state = READER_STATE_8_FAIL;
+					next_state = (last_data_received == 8'h5A) ? RESET_GAME : READER_STATE_8_FAIL;
 				end
-
+			RESET_GAME : next_state = READER_STATE_SELECT_DIFFICULTY;
 			default : next_state = READER_STATE_0_WAIT;
 		endcase // current_state
 	end
@@ -134,6 +145,7 @@ module Keyboard_Reader (
 		finished              = 1'd0;
 		enable_draw_sequence  = 1'b0;
 		ld_difficulty 		  = 1'b0;
+		game_reset    		  = 1'b0;
 		case (current_state)
 			READER_STATE_SELECT_DIFFICULTY:
 				begin
@@ -173,6 +185,10 @@ module Keyboard_Reader (
 			READER_STATE_8_FAIL :
 				begin
 					failed_input = 1'd1;
+				end
+			RESET_GAME : 
+				begin
+					game_reset = 1'd1;
 				end
 		endcase // current_state
 	end
@@ -232,13 +248,17 @@ module Keyboard_Reader (
 			difficulty <= 0;
 	end // always@(posedge clk)
 
+	always@(posedge clk)begin
+		resetn = 1'd1;
+		if(game_reset || board_resetn)
+			resetn = 1'd0;
+	end
+
 /*****************************************************************************
 	*                            Combinational logic                            *
 	*****************************************************************************/
-
-	assign resetn     = KEY[0];
-	assign start_read = ~KEY[1];
-	//assign resetn=~reset;
+	assign board_resetn = KEY[0];
+	assign clk = CLOCK_50;
 
 /*****************************************************************************
 	*                              Internal Modules                             *
@@ -247,7 +267,7 @@ module Keyboard_Reader (
 	PS2_Controller PS2 (
 		// Inputs
 		.CLOCK_50        (clk            ),
-		.reset           (reset          ),
+		.reset           (!resetn        ),
 		// Bidirectionals
 		.PS2_CLK         (PS2_CLK        ),
 		.PS2_DAT         (PS2_DAT        ),
@@ -281,7 +301,7 @@ module Keyboard_Reader (
 		.segments (HEX4         )
 	);
 
-	Keyboard_Parser i_Keyboard_Parser (
+	Keyboard_Parser i_Keyboard_Parser_Modifier (
 		.clk               (clk               ),
 		.resetn            (resetn            ),
 		.get_next_character(get_next_character),
