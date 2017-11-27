@@ -1,30 +1,30 @@
 module Keyboard_Reader (
 	// Inputs
-	input            CLOCK_50, // Clock
-	//input reset,
-	//input start_read,
-	input      [3:0] KEY     ,
-	//input            ps2_key_pressed,
-	//input      [7:0] ps2_key_data   ,
-	// Bidirectionals
-	inout            PS2_CLK ,
-	inout            PS2_DAT ,
-	// Outputs
-	output reg [9:0] LEDR    ,
-	output     [6:0] HEX0    ,
-	output     [6:0] HEX2    ,
-	output     [6:0] HEX4	 ,
+	input            CLOCK_50   , // Clock
+	input      [3:0] KEY        ,
+	
+	//Signals that are used for simulation
+	input            ps2_key_pressed,
+	input      [7:0] ps2_key_data   ,
+	
+	// // Bidirectionals
+	// inout            PS2_CLK    ,
+	// inout            PS2_DAT    ,
 
-	output			VGA_CLK,   				//	VGA Clock
-	output			VGA_HS,					//	VGA H_SYNC
-	output			VGA_VS,					//	VGA V_SYNC
-	output			VGA_BLANK_N,				//	VGA BLANK
-	output			VGA_SYNC_N,				//	VGA SYNC
-	output	[7:0]	VGA_R,   				//	VGA Red[7:0] Changed from 10 to 8-bit DAC
-	output	[7:0]	VGA_G,	 				//	VGA Green[7:0]
-	output	[7:0]	VGA_B   				//	VGA Blue[7:0]
+	// OutputsS
+	output reg [9:0] LEDR       ,
+	output     [6:0] HEX0       ,
+	output     [6:0] HEX2       ,
+	output     [6:0] HEX4       
 
-
+	// output           VGA_CLK    , //	VGA Clock
+	// output           VGA_HS     , //	VGA H_SYNC
+	// output           VGA_VS     , //	VGA V_SYNC
+	// output           VGA_BLANK_N, //	VGA BLANK
+	// output           VGA_SYNC_N , //	VGA SYNC
+	// output     [7:0] VGA_R      , //	VGA Red[7:0] Changed from 10 to 8-bit DAC
+	// output     [7:0] VGA_G      , //	VGA Green[7:0]
+	// output     [7:0] VGA_B        //	VGA Blue[7:0]
 );
 
 /*****************************************************************************
@@ -302,19 +302,19 @@ module Keyboard_Reader (
 
 wire [95:0] sequence_;
 
-	PS2_Controller PS2 (
-		// Inputs
-		.CLOCK_50        (clk            ),
-		.reset           (!resetn        ),
-		// Bidirectionals
-		.PS2_CLK         (PS2_CLK        ),
-		.PS2_DAT         (PS2_DAT        ),
-		//Outputs
-		.received_data   (ps2_key_data   ),
-		.received_data_en(ps2_key_pressed)
-	);
+	// PS2_Controller PS2 (
+	// 	// Inputs
+	// 	.CLOCK_50        (clk            ),
+	// 	.reset           (!resetn        ),
+	// 	// Bidirectionals
+	// 	.PS2_CLK         (PS2_CLK        ),
+	// 	.PS2_DAT         (PS2_DAT        ),
+	// 	//Outputs
+	// 	.received_data   (ps2_key_data   ),
+	// 	.received_data_en(ps2_key_pressed)
+	// );
 
-	Keyboard_Parser i_Keyboard_Parser_Modifier (
+	Keyboard_Parser_Modifier i_Keyboard_Parser_Modifier (
 		.clk               (clk               ),
 		.resetn            (resetn            ),
 		.get_next_character(get_next_character),
@@ -354,47 +354,45 @@ wire [95:0] sequence_;
 		.ready_to_plot_sequence(ready_to_plot_sequence)
 	);
 
-		// Create an Instance of a VGA controller - there can be only one!
-		// Define the number of colours as well as the initial background
-		// image file (.MIF) for the controller.
-		vga_adapter VGA (
-			.resetn   (resetn     ),
-			.clock    (CLOCK_50   ),
-			.colour   (colour     ),
-			.x        (x          ),
-			.y        (y          ),
-			.plot     (writeEn    ),
-			/* Signals for the DAC to drive the monitor. */
-			.VGA_R    (VGA_R      ),
-			.VGA_G    (VGA_G      ),
-			.VGA_B    (VGA_B      ),
-			.VGA_HS   (VGA_HS     ),
-			.VGA_VS   (VGA_VS     ),
-			.VGA_BLANK(VGA_BLANK_N),
-			.VGA_SYNC (VGA_SYNC_N ),
-			.VGA_CLK  (VGA_CLK    )
-		);
-		defparam VGA.RESOLUTION = "320x240";
-		defparam VGA.MONOCHROME = "FALSE";
-		defparam VGA.BITS_PER_COLOUR_CHANNEL = 2;
-		defparam VGA.BACKGROUND_IMAGE = "start.mif";
+		// // Create an Instance of a VGA controller - there can be only one!
+		// // Define the number of colours as well as the initial background
+		// // image file (.MIF) for the controller.
+		// vga_adapter VGA (
+		// 	.resetn   (board_resetn),
+		// 	.clock    (CLOCK_50    ),
+		// 	.colour   (colour      ),
+		// 	.x        (x           ),
+		// 	.y        (y           ),
+		// 	.plot     (writeEn     ),
+		// 	//Signals for the DAC to drive the monitor.
+		// 	.VGA_R    (VGA_R       ),
+		// 	.VGA_G    (VGA_G       ),
+		// 	.VGA_B    (VGA_B       ),
+		// 	.VGA_HS   (VGA_HS      ),
+		// 	.VGA_VS   (VGA_VS      ),
+		// 	.VGA_BLANK(VGA_BLANK_N ),
+		// 	.VGA_SYNC (VGA_SYNC_N  ),
+		// 	.VGA_CLK  (VGA_CLK     )
+		// );
+		// defparam VGA.RESOLUTION = "320x240";
+		// defparam VGA.MONOCHROME = "FALSE";
+		// defparam VGA.BITS_PER_COLOUR_CHANNEL = 2;
+		// defparam VGA.BACKGROUND_IMAGE = "start.mif";
 
+	// hex_decoder i_hex_decoder0 (
+	// 	.hex_digit(correct_keystroke_count[3:0]),
+	// 	.segments (HEX0                        )
+	// );
 
+	// hex_decoder i_hex_decoder1 (
+	// 	.hex_digit(total_keystroke_count[3:0]),
+	// 	.segments (HEX2                      )
+	// );
 
-	hex_decoder i_hex_decoder0 (
-		.hex_digit(correct_keystroke_count[3:0]),
-		.segments (HEX0                        )
-	);
-
-	hex_decoder i_hex_decoder1 (
-		.hex_digit(total_keystroke_count[3:0]),
-		.segments (HEX2                      )
-	);
-
-	hex_decoder i_hex_decoder2 (
-		.hex_digit(current_state),
-		.segments (HEX4         )
-	);
+	// hex_decoder i_hex_decoder2 (
+	// 	.hex_digit(current_state),
+	// 	.segments (HEX4         )
+	// );
 
 endmodule
 
