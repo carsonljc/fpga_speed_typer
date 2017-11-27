@@ -13,7 +13,18 @@ module Keyboard_Reader (
 	output reg [9:0] LEDR    ,
 	output     [6:0] HEX0    ,
 	output     [6:0] HEX2    ,
-	output     [6:0] HEX4
+	output     [6:0] HEX4	 ,
+
+	output			VGA_CLK,   				//	VGA Clock
+	output			VGA_HS,					//	VGA H_SYNC
+	output			VGA_VS,					//	VGA V_SYNC
+	output			VGA_BLANK_N,				//	VGA BLANK
+	output			VGA_SYNC_N,				//	VGA SYNC
+	output	[7:0]	VGA_R,   				//	VGA Red[7:0] Changed from 10 to 8-bit DAC
+	output	[7:0]	VGA_G,	 				//	VGA Green[7:0]
+	output	[7:0]	VGA_B   				//	VGA Blue[7:0]
+
+
 );
 
 /*****************************************************************************
@@ -30,8 +41,8 @@ module Keyboard_Reader (
 
 	// states
 	localparam
-		READER_STATE_0_WAIT = 4'd0,
-		READER_STATE_1_NEW = 4'd1,
+		READER_STATE_0_WAIT = 6'd0,
+		READER_STATE_1_NEW = 6'd1,
 		READER_STATE_2_IDLE = 4'd2,
 		READER_STATE_3_READ = 4'd3,
 		READER_STATE_4_COMPARE = 4'd4,
@@ -39,7 +50,11 @@ module Keyboard_Reader (
 		READER_STATE_6_CHECK = 4'd6,
 		READER_STATE_7_OUTPUT = 4'd7,
 		READER_STATE_8_FAIL = 4'd8,
-		RESET_GAME = 4'd9;
+		RESET_GAME = 4'd9
+		READER_STATE_DRAW_SEQUENCE_ON_SCREEN
+		READER_STATE_WAIT_SEQUENCE_ON_SCREEN
+		READER_STATE_WAIT_CLEAR_SEQUENCE
+		READER_STATE_CLEAR_SEQUENCE
 
 /*****************************************************************************
 	*                 Internal wires and registers Declarations                 *
@@ -56,23 +71,29 @@ module Keyboard_Reader (
 	wire       start_read       ;
 	reg        ld_difficulty    ;
 	wire [1:0] difficulty       ;
+	wire        ready_to_plot_sequence;
 	// wire [87:0]sequence;
 	// Internal Registers
 	reg        finished               ;
 	reg        enable_timer           ;
 	reg  [1:0] debouncing_count       ;
 	reg        failed_input           ;
-	reg        writeEn                ;
+	reg        correct_sequence       ;
 	reg        correct_data_received  ;
 	reg        get_next_character     ;
 	reg  [7:0] total_keystroke_count  ;
 	wire [7:0] comparison_data        ;
 	reg  [7:0] last_data_received     ;
-	reg  [3:0] current_state          ;
-	reg  [3:0] next_state             ;
+	reg  [5:0] current_state          ;
+	reg  [5:0] next_state             ;
 	reg  [7:0] correct_keystroke_count;
 	reg        game_reset             ;
 	reg        board_resetn           ;
+	reg        clear_sequence         ;
+	wire       writeEn                ;
+	wire [8:0] x                      ;
+	wire [8:0] y                      ;
+	wire [5:0] colour                 ;
 
 /*****************************************************************************
 	*                         Finite State Machine(s)                           *
@@ -89,6 +110,8 @@ module Keyboard_Reader (
 			READER_STATE_0_WAIT : next_state = (last_data_received == 8'h5A) ? READER_STATE_1_NEW : READER_STATE_0_WAIT;
 			//loads a new level
 			READER_STATE_1_NEW  : next_state = READER_STATE_DRAW_SEQUENCE_ON_SCREEN;
+			READER_STATE_CLEAR_SEQUENCE : next_state = READER_STATE_WAIT_CLEAR_SEQUENCE;
+			READER_STATE_WAIT_CLEAR_SEQUENCE : next_state = (ready_to_plot_sequence) ? READER_STATE_DRAW_SEQUENCE_ON_SCREEN : READER_STATE_WAIT_SEQUENCE_ON_SCREEN;
 			//sets the registers to start printing a sequence on the screen
 			READER_STATE_DRAW_SEQUENCE_ON_SCREEN : next_state = READER_STATE_WAIT_SEQUENCE_ON_SCREEN;
 			//waits until the sequence has been printed on the screen
@@ -146,7 +169,13 @@ module Keyboard_Reader (
 		enable_draw_sequence  = 1'b0;
 		ld_difficulty 		  = 1'b0;
 		game_reset    		  = 1'b0;
+		clear_sequence = 1'b0;
+
 		case (current_state)
+			READER_STATE_CLEAR_SEQUENCE : 
+				begin
+					clear_sequence = 1'b1;
+				end
 			READER_STATE_SELECT_DIFFICULTY:
 				begin
 					ld_difficulty = 1'b1; 
@@ -180,7 +209,7 @@ module Keyboard_Reader (
 				end
 			READER_STATE_7_OUTPUT :
 				begin
-					writeEn = 1'b1;
+					correct_sequence = 1'b1;
 				end
 			READER_STATE_8_FAIL :
 				begin
@@ -198,17 +227,19 @@ module Keyboard_Reader (
 	*                             Sequential logic                              *
 	*****************************************************************************/
 
+	//state changer
 	always @ (posedge clk) begin : state_change
 		if(!resetn) begin
-			current_state <= READER_STATE_0_WAIT;
+			current_state <= RESET_GAME;
 		end
 		else begin
 			current_state <= next_state;
 		end
 	end
 
+	//counting the amount of correct keystrokes
 	always @(posedge clk) begin
-		if(!resetn||finished) begin
+		if(!resetn || finished) begin
 			correct_keystroke_count <= 0;
 		end
 		else if (correct_data_received) begin
@@ -217,6 +248,7 @@ module Keyboard_Reader (
 		end
 	end
 
+	//counting the total amount of keystrokes, included debouncing for 3 enables
 	always @(posedge clk) begin
 		if (!resetn||finished) begin
 			debouncing_count      <= 2'd0;
@@ -224,7 +256,7 @@ module Keyboard_Reader (
 			total_keystroke_count <= 0;
 			enable_timer          <= 0;
 		end
-		else if (ps2_key_pressed == 1'b1 && debouncing_count==2'd2) begin
+		else if (ps2_key_pressed == 1'b1 && debouncing_count == 2'd2) begin
 			debouncing_count      <= 0;
 			total_keystroke_count <= total_keystroke_count + 1;
 		end
@@ -235,19 +267,23 @@ module Keyboard_Reader (
 		end
 	end
 
+	//register to read the input and store into a difficulty register
 	always@(posedge clk) begin
-		if(ps2_key_pressed == 1'b1) begin
+		if(ps2_key_pressed == 1'b1 && ld_difficulty) begin
 			if(last_data_received == 8'h16)
 				difficulty <= 1;
 			else if (last_data_received == 8'h1E)
 				difficulty <= 2;
 			else if (last_data_received == 8'h26)
 				difficulty <= 3;
-		end // if(ps2_key_pressed == 1'b1)
+		end
 		else
 			difficulty <= 0;
 	end // always@(posedge clk)
 
+	//always for sending resetn
+	//board_resetn is from the DE1-S0C
+	//game_reset is from the FSM
 	always@(posedge clk)begin
 		resetn = 1'd1;
 		if(game_reset || board_resetn)
@@ -264,6 +300,8 @@ module Keyboard_Reader (
 	*                              Internal Modules                             *
 	*****************************************************************************/
 
+wire [95:0] sequence_;
+
 	PS2_Controller PS2 (
 		// Inputs
 		.CLOCK_50        (clk            ),
@@ -276,15 +314,72 @@ module Keyboard_Reader (
 		.received_data_en(ps2_key_pressed)
 	);
 
-	// Keyboard_Input_Shift i_KeyBoard_Input_Shift (
-	// 	.num_char          (char_num          ),
-	// 	.sequence          (sequence          ),
-	// 	.resetn            (resetn            ),
-	// 	.get_next_character(get_next_character),
-	// 	.clk               (clk               ),
-	// 	.char_num          (char_num          ),
-	// 	.comparison_data   (comparison_data   )
-	// );
+	Keyboard_Parser i_Keyboard_Parser_Modifier (
+		.clk               (clk               ),
+		.resetn            (resetn            ),
+		.get_next_character(get_next_character),
+		.enable_next_level (enable_next_level ),
+		.num_char          (num_char          ),
+		.sequence_         (sequence_         ),
+		.comparison_data   (comparison_data   )
+	); 
+
+	timer_3s i_timer_3s (
+		.clk              (clk              ),
+		.q                (timer_done       ),
+		.enable_next_level(enable_next_level),
+		.enable           (enable_timer     ),
+		.num_char         (num_char         ),
+		.resetn           (resetn           )
+	);
+
+	wire        writeEn               ;
+	wire [ 8:0] x                     ;
+	wire [ 8:0] y                     ;
+	wire [ 5:0] colour                ;
+
+	VGA_sequence_drawing i_VGA_sequence_drawing (
+		.clk                   (clk                   ),
+		.resetn                (board_resetn          ), // TODO: Check connection ! Signal/port not matching : Expecting logic  -- Found READER_STATE_WAIT_SEQUENCE_ON_SCREEN READER_STATE_WAIT_CLEAR_SEQUENCE READER_STATE_CLEAR_SEQUENCE logic
+		.num_char              (num_char              ),
+		.sequence_             (sequence_             ),
+		.x_start               (10                    ),
+		.y_start               (198                   ),
+		.plot_sequence         (enable_draw_sequence  ),
+		.clear_sequence        (clear_sequence        ),
+		.writeEn               (writeEn               ),
+		.x                     (x                     ),
+		.y                     (y                     ),
+		.colour                (colour                ),
+		.ready_to_plot_sequence(ready_to_plot_sequence)
+	);
+
+		// Create an Instance of a VGA controller - there can be only one!
+		// Define the number of colours as well as the initial background
+		// image file (.MIF) for the controller.
+		vga_adapter VGA (
+			.resetn   (resetn     ),
+			.clock    (CLOCK_50   ),
+			.colour   (colour     ),
+			.x        (x          ),
+			.y        (y          ),
+			.plot     (writeEn    ),
+			/* Signals for the DAC to drive the monitor. */
+			.VGA_R    (VGA_R      ),
+			.VGA_G    (VGA_G      ),
+			.VGA_B    (VGA_B      ),
+			.VGA_HS   (VGA_HS     ),
+			.VGA_VS   (VGA_VS     ),
+			.VGA_BLANK(VGA_BLANK_N),
+			.VGA_SYNC (VGA_SYNC_N ),
+			.VGA_CLK  (VGA_CLK    )
+		);
+		defparam VGA.RESOLUTION = "320x240";
+		defparam VGA.MONOCHROME = "FALSE";
+		defparam VGA.BITS_PER_COLOUR_CHANNEL = 2;
+		defparam VGA.BACKGROUND_IMAGE = "start.mif";
+
+
 
 	hex_decoder i_hex_decoder0 (
 		.hex_digit(correct_keystroke_count[3:0]),
@@ -301,24 +396,6 @@ module Keyboard_Reader (
 		.segments (HEX4         )
 	);
 
-	Keyboard_Parser i_Keyboard_Parser_Modifier (
-		.clk               (clk               ),
-		.resetn            (resetn            ),
-		.get_next_character(get_next_character),
-		.enable_next_level (enable_next_level ),
-		.num_char          (num_char          ),
-		.comparison_data   (comparison_data   )
-	);
-
-
-	timer_3s i_timer_3s (
-		.clk              (clk              ),
-		.q                (timer_done       ),
-		.enable_next_level(enable_next_level),
-		.enable           (enable_timer     ),
-		.num_char         (num_char         ),
-		.resetn           (resetn           )
-	);
 endmodule
 
 

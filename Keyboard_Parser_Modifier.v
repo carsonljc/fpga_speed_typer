@@ -4,8 +4,8 @@ module Keyboard_Parser_Modifier (
 	input        get_next_character,
 	input        enable_next_level ,
 	output [7:0] num_char          ,
-	output [7:0] comparison_data   
-
+	output [7:0] comparison_data   ,
+	output [95:0] sequence_
 );
 
 	wire [95:0] sequence_;
@@ -25,7 +25,7 @@ next_level i_next_level (
 	.resetn           (resetn           ),
 	.enable_next_level(enable_next_level),
 	.load_sequence    (load_sequence    ),
-	.sequence_      (sequence_      ),
+	.sequence_      	(sequence_      ),
 	.num_char         (num_char         )
 );
 
