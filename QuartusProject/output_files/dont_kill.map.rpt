@@ -1,5 +1,5 @@
 Analysis & Synthesis report for dont_kill
-Mon Nov 27 20:48:44 2017
+Mon Nov 27 23:08:28 2017
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -26,7 +26,7 @@ Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
  18. Removed Registers Triggering Further Register Optimizations
  19. General Register Statistics
  20. Multiplexer Restructuring Statistics (Restructuring Performed)
- 21. Source assignments for vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated
+ 21. Source assignments for vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated
  22. Parameter Settings for User Entity Instance: PS2_Controller:PS2
  23. Parameter Settings for User Entity Instance: PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out
  24. Parameter Settings for User Entity Instance: vga_adapter:VGA
@@ -71,13 +71,13 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon Nov 27 20:48:44 2017       ;
+; Analysis & Synthesis Status     ; Successful - Mon Nov 27 23:08:28 2017       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; dont_kill                                   ;
 ; Top-level Entity Name           ; Keyboard_Reader                             ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 438                                         ;
+; Total registers                 ; 437                                         ;
 ; Total pins                      ; 67                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 460,800                                     ;
@@ -191,51 +191,52 @@ agreement for further details.
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;   0.0%      ;
+;     Processor 2            ;   0.1%      ;
 +----------------------------+-------------+
 
 
-+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis Source Files Read                                                                                                                                                                                              ;
-+-----------------------------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------------------+---------+
-; File Name with User-Entered Path                                ; Used in Netlist ; File Type                    ; File Name with Absolute Path                                                                           ; Library ;
-+-----------------------------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------------------+---------+
-; ../sequence_drawing_module/vga_adapter/vga_pll.v                ; yes             ; User Wizard-Generated File   ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_pll.v                ;         ;
-; ../sequence_drawing_module/vga_adapter/vga_controller.v         ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_controller.v         ;         ;
-; ../sequence_drawing_module/vga_adapter/vga_address_translator.v ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_address_translator.v ;         ;
-; ../sequence_drawing_module/vga_adapter/vga_adapter.v            ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_adapter.v            ;         ;
-; ../sequence_drawing_module/VGA_sequence_drawing.v               ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/VGA_sequence_drawing.v               ;         ;
-; ../sequence_drawing_module/VGA_character_drawing.v              ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/VGA_character_drawing.v              ;         ;
-; ../sequence_drawing_module/datapath_sequence.v                  ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/datapath_sequence.v                  ;         ;
-; ../sequence_drawing_module/datapath_draw.v                      ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/datapath_draw.v                      ;         ;
-; ../sequence_drawing_module/control_sequence.v                   ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/control_sequence.v                   ;         ;
-; ../sequence_drawing_module/control_draw.v                       ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/control_draw.v                       ;         ;
-; ../timer_3s.v                                                   ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/timer_3s.v                                                   ;         ;
-; ../PS2_Controller.v                                             ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/PS2_Controller.v                                             ;         ;
-; ../Keyboard_Reader.v                                            ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v                                            ;         ;
-; ../Keyboard_Parser_Modifier.v                                   ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Parser_Modifier.v                                   ;         ;
-; ../hex_decoder.v                                                ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/hex_decoder.v                                                ;         ;
-; ../Altera_UP_PS2_Data_In.v                                      ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/Altera_UP_PS2_Data_In.v                                      ;         ;
-; ../Altera_UP_PS2_Command_Out.v                                  ; yes             ; User Verilog HDL File        ; C:/Users/carso/Documents/GitHub/dont_kill/Altera_UP_PS2_Command_Out.v                                  ;         ;
-; altsyncram.tdf                                                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf                                  ;         ;
-; stratix_ram_block.inc                                           ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc                           ;         ;
-; lpm_mux.inc                                                     ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_mux.inc                                     ;         ;
-; lpm_decode.inc                                                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_decode.inc                                  ;         ;
-; aglobal170.inc                                                  ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/aglobal170.inc                                  ;         ;
-; a_rdenreg.inc                                                   ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_rdenreg.inc                                   ;         ;
-; altrom.inc                                                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altrom.inc                                      ;         ;
-; altram.inc                                                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altram.inc                                      ;         ;
-; altdpram.inc                                                    ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altdpram.inc                                    ;         ;
-; db/altsyncram_39m1.tdf                                          ; yes             ; Auto-Generated Megafunction  ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf                        ;         ;
-; db/decode_nma.tdf                                               ; yes             ; Auto-Generated Megafunction  ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_nma.tdf                             ;         ;
-; db/decode_g2a.tdf                                               ; yes             ; Auto-Generated Megafunction  ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_g2a.tdf                             ;         ;
-; db/mux_5hb.tdf                                                  ; yes             ; Auto-Generated Megafunction  ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/mux_5hb.tdf                                ;         ;
-; altpll.tdf                                                      ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altpll.tdf                                      ;         ;
-; stratix_pll.inc                                                 ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_pll.inc                                 ;         ;
-; stratixii_pll.inc                                               ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratixii_pll.inc                               ;         ;
-; cycloneii_pll.inc                                               ; yes             ; Megafunction                 ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/cycloneii_pll.inc                               ;         ;
-; db/altpll_80u.tdf                                               ; yes             ; Auto-Generated Megafunction  ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altpll_80u.tdf                             ;         ;
-+-----------------------------------------------------------------+-----------------+------------------------------+--------------------------------------------------------------------------------------------------------+---------+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                                                                        ;
++-----------------------------------------------------------------+-----------------+----------------------------------------+--------------------------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path                                ; Used in Netlist ; File Type                              ; File Name with Absolute Path                                                                           ; Library ;
++-----------------------------------------------------------------+-----------------+----------------------------------------+--------------------------------------------------------------------------------------------------------+---------+
+; ../sequence_drawing_module/vga_adapter/vga_pll.v                ; yes             ; User Wizard-Generated File             ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_pll.v                ;         ;
+; ../sequence_drawing_module/vga_adapter/vga_controller.v         ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_controller.v         ;         ;
+; ../sequence_drawing_module/vga_adapter/vga_address_translator.v ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_address_translator.v ;         ;
+; ../sequence_drawing_module/vga_adapter/vga_adapter.v            ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_adapter.v            ;         ;
+; ../sequence_drawing_module/VGA_sequence_drawing.v               ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/VGA_sequence_drawing.v               ;         ;
+; ../sequence_drawing_module/VGA_character_drawing.v              ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/VGA_character_drawing.v              ;         ;
+; ../sequence_drawing_module/datapath_sequence.v                  ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/datapath_sequence.v                  ;         ;
+; ../sequence_drawing_module/datapath_draw.v                      ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/datapath_draw.v                      ;         ;
+; ../sequence_drawing_module/control_sequence.v                   ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/control_sequence.v                   ;         ;
+; ../sequence_drawing_module/control_draw.v                       ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/control_draw.v                       ;         ;
+; ../timer_3s.v                                                   ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/timer_3s.v                                                   ;         ;
+; ../PS2_Controller.v                                             ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/PS2_Controller.v                                             ;         ;
+; ../Keyboard_Reader.v                                            ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v                                            ;         ;
+; ../Keyboard_Parser_Modifier.v                                   ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Parser_Modifier.v                                   ;         ;
+; ../hex_decoder.v                                                ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/hex_decoder.v                                                ;         ;
+; ../Altera_UP_PS2_Data_In.v                                      ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/Altera_UP_PS2_Data_In.v                                      ;         ;
+; ../Altera_UP_PS2_Command_Out.v                                  ; yes             ; User Verilog HDL File                  ; C:/Users/carso/Documents/GitHub/dont_kill/Altera_UP_PS2_Command_Out.v                                  ;         ;
+; altsyncram.tdf                                                  ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf                                  ;         ;
+; stratix_ram_block.inc                                           ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_ram_block.inc                           ;         ;
+; lpm_mux.inc                                                     ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_mux.inc                                     ;         ;
+; lpm_decode.inc                                                  ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/lpm_decode.inc                                  ;         ;
+; aglobal170.inc                                                  ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/aglobal170.inc                                  ;         ;
+; a_rdenreg.inc                                                   ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/a_rdenreg.inc                                   ;         ;
+; altrom.inc                                                      ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altrom.inc                                      ;         ;
+; altram.inc                                                      ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altram.inc                                      ;         ;
+; altdpram.inc                                                    ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altdpram.inc                                    ;         ;
+; db/altsyncram_0mm1.tdf                                          ; yes             ; Auto-Generated Megafunction            ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_0mm1.tdf                        ;         ;
+; ../sequence_drawing_module/vga_adapter/vga_start.mif            ; yes             ; Auto-Found Memory Initialization File  ; C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_start.mif            ;         ;
+; db/decode_nma.tdf                                               ; yes             ; Auto-Generated Megafunction            ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_nma.tdf                             ;         ;
+; db/decode_g2a.tdf                                               ; yes             ; Auto-Generated Megafunction            ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_g2a.tdf                             ;         ;
+; db/mux_5hb.tdf                                                  ; yes             ; Auto-Generated Megafunction            ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/mux_5hb.tdf                                ;         ;
+; altpll.tdf                                                      ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altpll.tdf                                      ;         ;
+; stratix_pll.inc                                                 ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratix_pll.inc                                 ;         ;
+; stratixii_pll.inc                                               ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/stratixii_pll.inc                               ;         ;
+; cycloneii_pll.inc                                               ; yes             ; Megafunction                           ; c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/cycloneii_pll.inc                               ;         ;
+; db/altpll_80u.tdf                                               ; yes             ; Auto-Generated Megafunction            ; C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altpll_80u.tdf                             ;         ;
++-----------------------------------------------------------------+-----------------+----------------------------------------+--------------------------------------------------------------------------------------------------------+---------+
 
 
 +--------------------------------------------------------------+
@@ -245,14 +246,14 @@ agreement for further details.
 +---------------------------------------------+----------------+
 ; Estimate of Logic utilization (ALMs needed) ; 426            ;
 ;                                             ;                ;
-; Combinational ALUT usage for logic          ; 671            ;
+; Combinational ALUT usage for logic          ; 668            ;
 ;     -- 7 input functions                    ; 3              ;
-;     -- 6 input functions                    ; 124            ;
-;     -- 5 input functions                    ; 96             ;
-;     -- 4 input functions                    ; 152            ;
-;     -- <=3 input functions                  ; 296            ;
+;     -- 6 input functions                    ; 127            ;
+;     -- 5 input functions                    ; 95             ;
+;     -- 4 input functions                    ; 153            ;
+;     -- <=3 input functions                  ; 290            ;
 ;                                             ;                ;
-; Dedicated logic registers                   ; 438            ;
+; Dedicated logic registers                   ; 437            ;
 ;                                             ;                ;
 ; I/O pins                                    ; 67             ;
 ; Total MLAB memory bits                      ; 0              ;
@@ -264,9 +265,9 @@ agreement for further details.
 ;     -- PLLs                                 ; 1              ;
 ;                                             ;                ;
 ; Maximum fan-out node                        ; CLOCK_50~input ;
-; Maximum fan-out                             ; 465            ;
-; Total fan-out                               ; 6316           ;
-; Average fan-out                             ; 4.82           ;
+; Maximum fan-out                             ; 464            ;
+; Total fan-out                               ; 6317           ;
+; Average fan-out                             ; 4.83           ;
 +---------------------------------------------+----------------+
 
 
@@ -275,12 +276,12 @@ agreement for further details.
 +----------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+--------------+
 ; Compilation Hierarchy Node                               ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                ; Entity Name               ; Library Name ;
 +----------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------+--------------+
-; |Keyboard_Reader                                         ; 671 (51)            ; 438 (30)                  ; 460800            ; 5          ; 67   ; 0            ; |Keyboard_Reader                                                                                                                                                                   ; Keyboard_Reader           ; work         ;
+; |Keyboard_Reader                                         ; 668 (49)            ; 437 (29)                  ; 460800            ; 5          ; 67   ; 0            ; |Keyboard_Reader                                                                                                                                                                   ; Keyboard_Reader           ; work         ;
 ;    |Keyboard_Parser_Modifier:i_Keyboard_Parser_Modifier| ; 66 (0)              ; 56 (0)                    ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|Keyboard_Parser_Modifier:i_Keyboard_Parser_Modifier                                                                                                               ; Keyboard_Parser_Modifier  ; work         ;
 ;       |Keyboard_Input_Shift:i_Keyboard_Input_Shift|      ; 7 (7)               ; 48 (48)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|Keyboard_Parser_Modifier:i_Keyboard_Parser_Modifier|Keyboard_Input_Shift:i_Keyboard_Input_Shift                                                                   ; Keyboard_Input_Shift      ; work         ;
 ;       |next_level:i_next_level|                          ; 59 (59)             ; 8 (8)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|Keyboard_Parser_Modifier:i_Keyboard_Parser_Modifier|next_level:i_next_level                                                                                       ; next_level                ; work         ;
-;    |PS2_Controller:PS2|                                  ; 103 (7)             ; 90 (5)                    ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|PS2_Controller:PS2                                                                                                                                                ; PS2_Controller            ; work         ;
-;       |Altera_UP_PS2_Command_Out:PS2_Command_Out|        ; 82 (82)             ; 60 (60)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out                                                                                                      ; Altera_UP_PS2_Command_Out ; work         ;
+;    |PS2_Controller:PS2|                                  ; 104 (7)             ; 90 (5)                    ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|PS2_Controller:PS2                                                                                                                                                ; PS2_Controller            ; work         ;
+;       |Altera_UP_PS2_Command_Out:PS2_Command_Out|        ; 83 (83)             ; 60 (60)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out                                                                                                      ; Altera_UP_PS2_Command_Out ; work         ;
 ;       |Altera_UP_PS2_Data_In:PS2_Data_In|                ; 14 (14)             ; 25 (25)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|PS2_Controller:PS2|Altera_UP_PS2_Data_In:PS2_Data_In                                                                                                              ; Altera_UP_PS2_Data_In     ; work         ;
 ;    |VGA_sequence_drawing:i_VGA_sequence_drawing|         ; 234 (0)             ; 199 (0)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing                                                                                                                       ; VGA_sequence_drawing      ; work         ;
 ;       |VGA_SEQUENCE_CONTROL:i_VGA_SEQUENCE_CONTROL|      ; 24 (24)             ; 15 (15)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_SEQUENCE_CONTROL:i_VGA_SEQUENCE_CONTROL                                                                           ; VGA_SEQUENCE_CONTROL      ; work         ;
@@ -295,14 +296,14 @@ agreement for further details.
 ;             |pixel_decoder:i_pixel_decoder|              ; 67 (67)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|pixel_decoder:i_pixel_decoder     ; pixel_decoder             ; work         ;
 ;    |hex_decoder:i_hex_decoder0|                          ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|hex_decoder:i_hex_decoder0                                                                                                                                        ; hex_decoder               ; work         ;
 ;    |hex_decoder:i_hex_decoder1|                          ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|hex_decoder:i_hex_decoder1                                                                                                                                        ; hex_decoder               ; work         ;
-;    |hex_decoder:i_hex_decoder2|                          ; 9 (9)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|hex_decoder:i_hex_decoder2                                                                                                                                        ; hex_decoder               ; work         ;
+;    |hex_decoder:i_hex_decoder2|                          ; 7 (7)               ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|hex_decoder:i_hex_decoder2                                                                                                                                        ; hex_decoder               ; work         ;
 ;    |timer_3s:i_timer_3s|                                 ; 94 (94)             ; 29 (29)                   ; 0                 ; 5          ; 0    ; 0            ; |Keyboard_Reader|timer_3s:i_timer_3s                                                                                                                                               ; timer_3s                  ; work         ;
 ;    |vga_adapter:VGA|                                     ; 100 (2)             ; 34 (0)                    ; 460800            ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA                                                                                                                                                   ; vga_adapter               ; work         ;
 ;       |altsyncram:VideoMemory|                           ; 44 (0)              ; 8 (0)                     ; 460800            ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory                                                                                                                            ; altsyncram                ; work         ;
-;          |altsyncram_39m1:auto_generated|                ; 44 (0)              ; 8 (8)                     ; 460800            ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated                                                                                             ; altsyncram_39m1           ; work         ;
-;             |decode_g2a:rden_decode_b|                   ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|decode_g2a:rden_decode_b                                                                    ; decode_g2a                ; work         ;
-;             |decode_nma:decode2|                         ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|decode_nma:decode2                                                                          ; decode_nma                ; work         ;
-;             |mux_5hb:mux3|                               ; 24 (24)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|mux_5hb:mux3                                                                                ; mux_5hb                   ; work         ;
+;          |altsyncram_0mm1:auto_generated|                ; 44 (0)              ; 8 (8)                     ; 460800            ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated                                                                                             ; altsyncram_0mm1           ; work         ;
+;             |decode_g2a:rden_decode_b|                   ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|decode_g2a:rden_decode_b                                                                    ; decode_g2a                ; work         ;
+;             |decode_nma:decode2|                         ; 10 (10)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|decode_nma:decode2                                                                          ; decode_nma                ; work         ;
+;             |mux_5hb:mux3|                               ; 24 (24)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|mux_5hb:mux3                                                                                ; mux_5hb                   ; work         ;
 ;       |vga_address_translator:user_input_translator|     ; 11 (11)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|vga_address_translator:user_input_translator                                                                                                      ; vga_address_translator    ; work         ;
 ;       |vga_controller:controller|                        ; 43 (32)             ; 26 (26)                   ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|vga_controller:controller                                                                                                                         ; vga_controller            ; work         ;
 ;          |vga_address_translator:controller_translator|  ; 11 (11)             ; 0 (0)                     ; 0                 ; 0          ; 0    ; 0            ; |Keyboard_Reader|vga_adapter:VGA|vga_controller:controller|vga_address_translator:controller_translator                                                                            ; vga_address_translator    ; work         ;
@@ -313,13 +314,13 @@ agreement for further details.
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
 
 
-+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-; Analysis & Synthesis RAM Summary                                                                                                                                                       ;
-+----------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
-; Name                                                                             ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF  ;
-+----------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
-; vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 76800        ; 6            ; 76800        ; 6            ; 460800 ; None ;
-+----------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+------+
++-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis RAM Summary                                                                                                                                                                ;
++----------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+---------------+
+; Name                                                                             ; Type ; Mode             ; Port A Depth ; Port A Width ; Port B Depth ; Port B Width ; Size   ; MIF           ;
++----------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+---------------+
+; vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|ALTSYNCRAM ; AUTO ; Simple Dual Port ; 76800        ; 6            ; 76800        ; 6            ; 460800 ; vga_start.mif ;
++----------------------------------------------------------------------------------+------+------------------+--------------+--------------+--------------+--------------+--------+---------------+
 
 
 +-----------------------------------------------+
@@ -447,10 +448,10 @@ Encoding Type:  One-Hot
 ; current_state[4]                                                                                                                                                                    ; Stuck at GND due to stuck port data_in                                                                                                                                                   ;
 ; PS2_Controller:PS2|idle_counter[0..7]                                                                                                                                               ; Lost fanout                                                                                                                                                                              ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_colour:i_char_colour|colour_out[1..5]          ; Merged with VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_colour:i_char_colour|colour_out[0]      ;
-; PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[1..7]                                                                                                      ; Merged with PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[0]                                                                                                  ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|y[8]              ; Lost fanout                                                                                                                                                                              ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|y_start[8]                                                  ; Lost fanout                                                                                                                                                                              ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|colour[1..5]                                                ; Merged with VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|colour[0]                                            ;
+; PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[1..7]                                                                                                      ; Merged with PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out|ps2_command[0]                                                                                                  ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|y[1]              ; Merged with VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|x[1]       ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|y[0]              ; Merged with VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|x[0]       ;
 ; VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|colour_buffer[1..5]                                         ; Merged with VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|colour_buffer[0]                                     ;
@@ -585,7 +586,7 @@ Encoding Type:  One-Hot
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 438   ;
+; Total registers                              ; 437   ;
 ; Number of registers using Synchronous Clear  ; 288   ;
 ; Number of registers using Synchronous Load   ; 120   ;
 ; Number of registers using Asynchronous Clear ; 20    ;
@@ -605,14 +606,14 @@ Encoding Type:  One-Hot
 ; 3:1                ; 11 bits   ; 22 LEs        ; 0 LEs                ; 22 LEs                 ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|colour_buffer[0]                                     ;
 ; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_SEQUENCE_DATAPATH:i_VGA_SEQUENCE_DATAPATH|sequence_wire[44]                                                                  ;
 ; 3:1                ; 42 bits   ; 84 LEs        ; 0 LEs                ; 84 LEs                 ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_SEQUENCE_DATAPATH:i_VGA_SEQUENCE_DATAPATH|sequence_wire[68]                                                                  ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_SEQUENCE_CONTROL:i_VGA_SEQUENCE_CONTROL|character_plotted[1]                                                                 ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_SEQUENCE_CONTROL:i_VGA_SEQUENCE_CONTROL|character_plotted[4]                                                                 ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|PS2_Controller:PS2|Altera_UP_PS2_Data_In:PS2_Data_In|received_data[3]                                                                                                        ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|correct_keystroke_count[6]                                                                                                                                                   ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|correct_keystroke_count[7]                                                                                                                                                   ;
 ; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|total_keystroke_count[7]                                                                                                                                                     ;
 ; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; Yes        ; |Keyboard_Reader|debouncing_count[1]                                                                                                                                                          ;
-; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Keyboard_Reader|Keyboard_Parser_Modifier:i_Keyboard_Parser_Modifier|next_level:i_next_level|address[0]                                                                                       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|PS2_Controller:PS2|Altera_UP_PS2_Data_In:PS2_Data_In|data_shift_reg[4]                                                                                                       ;
-; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|last_data_received[4]                                                                                                                                                        ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Keyboard_Reader|Keyboard_Parser_Modifier:i_Keyboard_Parser_Modifier|next_level:i_next_level|address[2]                                                                                       ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|PS2_Controller:PS2|Altera_UP_PS2_Data_In:PS2_Data_In|data_shift_reg[3]                                                                                                       ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 0 LEs                ; 16 LEs                 ; Yes        ; |Keyboard_Reader|last_data_received[0]                                                                                                                                                        ;
 ; 3:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |Keyboard_Reader|vga_adapter:VGA|vga_controller:controller|yCounter[9]                                                                                                                        ;
 ; 4:1                ; 4 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|y[3]       ;
 ; 4:1                ; 10 bits   ; 20 LEs        ; 0 LEs                ; 20 LEs                 ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_sequence:i_datapath_sequence|char_coordinate:i_char_coordinate|x[6]       ;
@@ -633,12 +634,12 @@ Encoding Type:  One-Hot
 ; 5:1                ; 15 bits   ; 45 LEs        ; 30 LEs               ; 15 LEs                 ; Yes        ; |Keyboard_Reader|VGA_sequence_drawing:i_VGA_sequence_drawing|VGA_character_drawing:i_VGA_character_drawing|datapath_draw:i_datapath_draw|x[3]                                                 ;
 ; 6:1                ; 2 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; Yes        ; |Keyboard_Reader|difficulty[0]                                                                                                                                                                ;
 ; 10:1               ; 28 bits   ; 168 LEs       ; 112 LEs              ; 56 LEs                 ; Yes        ; |Keyboard_Reader|timer_3s:i_timer_3s|counter[26]                                                                                                                                              ;
-; 9:1                ; 6 bits    ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|mux_5hb:mux3|l4_w1_n0_mux_dataout                                                                      ;
+; 9:1                ; 6 bits    ; 36 LEs        ; 36 LEs               ; 0 LEs                  ; No         ; |Keyboard_Reader|vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|mux_5hb:mux3|l4_w1_n0_mux_dataout                                                                      ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 
 +----------------------------------------------------------------------------------------------+
-; Source assignments for vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated ;
+; Source assignments for vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated ;
 +---------------------------------+--------------------+------+--------------------------------+
 ; Assignment                      ; Value              ; From ; To                             ;
 +---------------------------------+--------------------+------+--------------------------------+
@@ -684,14 +685,14 @@ Note: In order to hide this table in the UI and the text report file, please set
 
 +--------------------------------------------------------------+
 ; Parameter Settings for User Entity Instance: vga_adapter:VGA ;
-+-------------------------+-----------+------------------------+
-; Parameter Name          ; Value     ; Type                   ;
-+-------------------------+-----------+------------------------+
-; BITS_PER_COLOUR_CHANNEL ; 2         ; Signed Integer         ;
-; MONOCHROME              ; FALSE     ; String                 ;
-; RESOLUTION              ; 320x240   ; String                 ;
-; BACKGROUND_IMAGE        ; start.mif ; String                 ;
-+-------------------------+-----------+------------------------+
++-------------------------+---------------+--------------------+
+; Parameter Name          ; Value         ; Type               ;
++-------------------------+---------------+--------------------+
+; BITS_PER_COLOUR_CHANNEL ; 2             ; Signed Integer     ;
+; MONOCHROME              ; FALSE         ; String             ;
+; RESOLUTION              ; 320x240       ; String             ;
+; BACKGROUND_IMAGE        ; vga_start.mif ; String             ;
++-------------------------+---------------+--------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
 
@@ -748,7 +749,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; READ_DURING_WRITE_MODE_MIXED_PORTS ; DONT_CARE            ; Untyped                 ;
 ; READ_DURING_WRITE_MODE_PORT_A      ; NEW_DATA_NO_NBE_READ ; Untyped                 ;
 ; READ_DURING_WRITE_MODE_PORT_B      ; NEW_DATA_NO_NBE_READ ; Untyped                 ;
-; INIT_FILE                          ; start.mif            ; Untyped                 ;
+; INIT_FILE                          ; vga_start.mif        ; Untyped                 ;
 ; INIT_FILE_LAYOUT                   ; PORT_A               ; Untyped                 ;
 ; MAXIMUM_DEPTH                      ; 0                    ; Untyped                 ;
 ; CLOCK_ENABLE_INPUT_A               ; BYPASS               ; Untyped                 ;
@@ -761,7 +762,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; ECC_PIPELINE_STAGE_ENABLED         ; FALSE                ; Untyped                 ;
 ; WIDTH_ECCSTATUS                    ; 3                    ; Untyped                 ;
 ; DEVICE_FAMILY                      ; Cyclone V            ; Untyped                 ;
-; CBXI_PARAMETER                     ; altsyncram_39m1      ; Untyped                 ;
+; CBXI_PARAMETER                     ; altsyncram_0mm1      ; Untyped                 ;
 +------------------------------------+----------------------+-------------------------+
 Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
 
@@ -1272,7 +1273,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 438                         ;
+; arriav_ff             ; 437                         ;
 ;     CLR SCLR          ; 10                          ;
 ;     ENA               ; 57                          ;
 ;     ENA CLR SCLR      ; 10                          ;
@@ -1281,9 +1282,9 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;     ENA SLD           ; 42                          ;
 ;     SCLR              ; 24                          ;
 ;     SLD               ; 2                           ;
-;     plain             ; 49                          ;
+;     plain             ; 48                          ;
 ; arriav_io_obuf        ; 2                           ;
-; arriav_lcell_comb     ; 676                         ;
+; arriav_lcell_comb     ; 673                         ;
 ;     arith             ; 164                         ;
 ;         1 data inputs ; 145                         ;
 ;         2 data inputs ; 3                           ;
@@ -1291,14 +1292,14 @@ Note: In order to hide this table in the UI and the text report file, please set
 ;         4 data inputs ; 3                           ;
 ;     extend            ; 3                           ;
 ;         7 data inputs ; 3                           ;
-;     normal            ; 487                         ;
+;     normal            ; 484                         ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 4                           ;
-;         2 data inputs ; 32                          ;
-;         3 data inputs ; 80                          ;
-;         4 data inputs ; 149                         ;
-;         5 data inputs ; 96                          ;
-;         6 data inputs ; 124                         ;
+;         2 data inputs ; 29                          ;
+;         3 data inputs ; 77                          ;
+;         4 data inputs ; 150                         ;
+;         5 data inputs ; 95                          ;
+;         6 data inputs ; 127                         ;
 ;     shared            ; 22                          ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 4                           ;
@@ -1310,7 +1311,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; stratixv_ram_block    ; 60                          ;
 ;                       ;                             ;
 ; Max LUT depth         ; 5.70                        ;
-; Average LUT depth     ; 2.09                        ;
+; Average LUT depth     ; 2.07                        ;
 +-----------------------+-----------------------------+
 
 
@@ -1319,7 +1320,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:03     ;
 +----------------+--------------+
 
 
@@ -1329,7 +1330,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Mon Nov 27 20:48:30 2017
+    Info: Processing started: Mon Nov 27 23:08:04 2017
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off dont_kill -c dont_kill
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
@@ -1389,12 +1390,13 @@ Info (12021): Found 1 design units, including 1 entities, in source file /users/
 Info (12021): Found 1 design units, including 1 entities, in source file /users/carso/documents/github/dont_kill/altera_up_ps2_command_out.v
     Info (12023): Found entity 1: Altera_UP_PS2_Command_Out File: C:/Users/carso/Documents/GitHub/dont_kill/Altera_UP_PS2_Command_Out.v Line: 10
 Info (12127): Elaborating entity "Keyboard_Reader" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at Keyboard_Reader.v(82): object "failed_input" assigned a value but never read File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 82
-Warning (10036): Verilog HDL or VHDL warning at Keyboard_Reader.v(83): object "correct_sequence" assigned a value but never read File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 83
-Warning (10270): Verilog HDL Case Statement warning at Keyboard_Reader.v(177): incomplete case statement has no default case item File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 177
-Warning (10230): Verilog HDL assignment warning at Keyboard_Reader.v(250): truncated value with size 32 to match size of target (8) File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 250
-Warning (10230): Verilog HDL assignment warning at Keyboard_Reader.v(264): truncated value with size 32 to match size of target (8) File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 264
-Warning (10034): Output port "LEDR" at Keyboard_Reader.v(15) has no driver File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
+Warning (10036): Verilog HDL or VHDL warning at Keyboard_Reader.v(65): object "resetn" assigned a value but never read File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 65
+Warning (10036): Verilog HDL or VHDL warning at Keyboard_Reader.v(81): object "failed_input" assigned a value but never read File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 81
+Warning (10036): Verilog HDL or VHDL warning at Keyboard_Reader.v(82): object "correct_sequence" assigned a value but never read File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 82
+Warning (10270): Verilog HDL Case Statement warning at Keyboard_Reader.v(176): incomplete case statement has no default case item File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 176
+Warning (10230): Verilog HDL assignment warning at Keyboard_Reader.v(249): truncated value with size 32 to match size of target (8) File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 249
+Warning (10230): Verilog HDL assignment warning at Keyboard_Reader.v(263): truncated value with size 32 to match size of target (8) File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 263
+Warning (10034): Output port "LEDR[9..1]" at Keyboard_Reader.v(14) has no driver File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
 Info (12128): Elaborating entity "PS2_Controller" for hierarchy "PS2_Controller:PS2" File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 318
 Info (12128): Elaborating entity "Altera_UP_PS2_Data_In" for hierarchy "PS2_Controller:PS2|Altera_UP_PS2_Data_In:PS2_Data_In" File: C:/Users/carso/Documents/GitHub/dont_kill/PS2_Controller.v Line: 246
 Info (12128): Elaborating entity "Altera_UP_PS2_Command_Out" for hierarchy "PS2_Controller:PS2|Altera_UP_PS2_Command_Out:PS2_Command_Out" File: C:/Users/carso/Documents/GitHub/dont_kill/PS2_Controller.v Line: 266
@@ -1463,19 +1465,19 @@ Info (12133): Instantiated megafunction "vga_adapter:VGA|altsyncram:VideoMemory"
     Info (12134): Parameter "CLOCK_ENABLE_INPUT_B" = "BYPASS"
     Info (12134): Parameter "CLOCK_ENABLE_OUTPUT_B" = "BYPASS"
     Info (12134): Parameter "POWER_UP_UNINITIALIZED" = "FALSE"
-    Info (12134): Parameter "INIT_FILE" = "start.mif"
-Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_39m1.tdf
-    Info (12023): Found entity 1: altsyncram_39m1 File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf Line: 34
-Info (12128): Elaborating entity "altsyncram_39m1" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated" File: c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
+    Info (12134): Parameter "INIT_FILE" = "vga_start.mif"
+Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_0mm1.tdf
+    Info (12023): Found entity 1: altsyncram_0mm1 File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_0mm1.tdf Line: 34
+Info (12128): Elaborating entity "altsyncram_0mm1" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated" File: c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_nma.tdf
     Info (12023): Found entity 1: decode_nma File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_nma.tdf Line: 23
-Info (12128): Elaborating entity "decode_nma" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|decode_nma:decode2" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf Line: 47
+Info (12128): Elaborating entity "decode_nma" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|decode_nma:decode2" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_0mm1.tdf Line: 47
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_g2a.tdf
     Info (12023): Found entity 1: decode_g2a File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_g2a.tdf Line: 23
-Info (12128): Elaborating entity "decode_g2a" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|decode_g2a:rden_decode_b" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf Line: 48
+Info (12128): Elaborating entity "decode_g2a" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|decode_g2a:rden_decode_b" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_0mm1.tdf Line: 48
 Info (12021): Found 1 design units, including 1 entities, in source file db/mux_5hb.tdf
     Info (12023): Found entity 1: mux_5hb File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/mux_5hb.tdf Line: 23
-Info (12128): Elaborating entity "mux_5hb" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|mux_5hb:mux3" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf Line: 50
+Info (12128): Elaborating entity "mux_5hb" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_0mm1:auto_generated|mux_5hb:mux3" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_0mm1.tdf Line: 50
 Info (12128): Elaborating entity "vga_pll" for hierarchy "vga_adapter:VGA|vga_pll:mypll" File: C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_adapter.v Line: 231
 Info (12128): Elaborating entity "altpll" for hierarchy "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" File: C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_pll.v Line: 53
 Info (12130): Elaborated megafunction instantiation "vga_adapter:VGA|vga_pll:mypll|altpll:altpll_component" File: C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_pll.v Line: 53
@@ -1498,17 +1500,16 @@ Info (12128): Elaborating entity "vga_controller" for hierarchy "vga_adapter:VGA
 Info (12128): Elaborating entity "hex_decoder" for hierarchy "hex_decoder:i_hex_decoder0" File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 384
 Warning (12241): 3 hierarchies have connectivity warnings - see the Connectivity Checks report folder
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "LEDR[0]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[1]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[2]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 15
-    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 24
+    Warning (13410): Pin "LEDR[1]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[2]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[3]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[4]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[5]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[6]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[7]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[8]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "LEDR[9]" is stuck at GND File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 14
+    Warning (13410): Pin "VGA_SYNC_N" is stuck at VCC File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 23
 Info (286030): Timing-Driven Synthesis is running
 Info (17049): 38 registers lost all their fanouts during netlist optimizations.
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
@@ -1519,18 +1520,18 @@ Warning (21074): Design contains 3 input pin(s) that do not drive logic
     Warning (15610): No output dependent on input pin "KEY[1]" File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 4
     Warning (15610): No output dependent on input pin "KEY[2]" File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 4
     Warning (15610): No output dependent on input pin "KEY[3]" File: C:/Users/carso/Documents/GitHub/dont_kill/Keyboard_Reader.v Line: 4
-Info (21057): Implemented 956 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 953 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 5 input pins
     Info (21059): Implemented 60 output pins
     Info (21060): Implemented 2 bidirectional pins
-    Info (21061): Implemented 823 logic cells
+    Info (21061): Implemented 820 logic cells
     Info (21064): Implemented 60 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 5 DSP elements
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 67 warnings
-    Info: Peak virtual memory: 778 megabytes
-    Info: Processing ended: Mon Nov 27 20:48:44 2017
-    Info: Elapsed time: 00:00:14
-    Info: Total CPU time (on all processors): 00:00:28
+    Info: Peak virtual memory: 770 megabytes
+    Info: Processing ended: Mon Nov 27 23:08:28 2017
+    Info: Elapsed time: 00:00:24
+    Info: Total CPU time (on all processors): 00:00:37
 
 

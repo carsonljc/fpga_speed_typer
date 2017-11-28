@@ -2,7 +2,6 @@ module Keyboard_Reader (
 	// Inputs
 	input            CLOCK_50   , // Clock
 	input      [3:0] KEY        ,
-	
 	//Signals that are used for simulation
 	//input            ps2_key_pressed,
 	//input      [7:0] ps2_key_data   ,
@@ -12,7 +11,7 @@ module Keyboard_Reader (
 	inout            PS2_DAT    ,
 
 	// OutputsS
-	output reg [9:0] LEDR       ,
+	output     [9:0] LEDR       ,
 	output     [6:0] HEX0       ,
 	output     [6:0] HEX2       ,
 	output     [6:0] HEX4       ,
@@ -298,6 +297,7 @@ module Keyboard_Reader (
 	*****************************************************************************/
 	assign board_resetn = KEY[0];
 	assign clk = CLOCK_50;
+	assign LEDR[0] = ps2_key_pressed;
 
 /*****************************************************************************
 	*                              Internal Modules                             *
@@ -308,7 +308,7 @@ wire [95:0] sequence_;
 	PS2_Controller PS2 (
 		// Inputs
 		.CLOCK_50        (clk            ),
-		.reset           (!resetn        ),
+		.reset           (!board_resetn        ),
 		// Bidirectionals
 		.PS2_CLK         (PS2_CLK        ),
 		.PS2_DAT         (PS2_DAT        ),
@@ -376,13 +376,13 @@ wire [95:0] sequence_;
 		defparam VGA.RESOLUTION = "320x240";
 		defparam VGA.MONOCHROME = "FALSE";
 		defparam VGA.BITS_PER_COLOUR_CHANNEL = 2;
-		defparam VGA.BACKGROUND_IMAGE = "start.mif";
+		defparam VGA.BACKGROUND_IMAGE = "vga_start.mif";
 
 	hex_decoder i_hex_decoder0 (
 		.hex_digit(correct_keystroke_count[3:0]),
 		.segments (HEX0                        )
 	);
-
+	
 	hex_decoder i_hex_decoder1 (
 		.hex_digit(total_keystroke_count[3:0]),
 		.segments (HEX2                      )
