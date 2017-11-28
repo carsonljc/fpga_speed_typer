@@ -1,5 +1,5 @@
 Analysis & Synthesis report for dont_kill
-Mon Nov 27 20:38:19 2017
+Mon Nov 27 20:48:44 2017
 Quartus Prime Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
 
 
@@ -71,7 +71,7 @@ agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Mon Nov 27 20:38:19 2017       ;
+; Analysis & Synthesis Status     ; Successful - Mon Nov 27 20:48:44 2017       ;
 ; Quartus Prime Version           ; 17.0.0 Build 595 04/25/2017 SJ Lite Edition ;
 ; Revision Name                   ; dont_kill                                   ;
 ; Top-level Entity Name           ; Keyboard_Reader                             ;
@@ -1329,7 +1329,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 17.0.0 Build 595 04/25/2017 SJ Lite Edition
-    Info: Processing started: Mon Nov 27 20:38:04 2017
+    Info: Processing started: Mon Nov 27 20:48:30 2017
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off dont_kill -c dont_kill
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 2 of the 2 processors detected
@@ -1467,7 +1467,6 @@ Info (12133): Instantiated megafunction "vga_adapter:VGA|altsyncram:VideoMemory"
 Info (12021): Found 1 design units, including 1 entities, in source file db/altsyncram_39m1.tdf
     Info (12023): Found entity 1: altsyncram_39m1 File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf Line: 34
 Info (12128): Elaborating entity "altsyncram_39m1" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated" File: c:/intelfpga_lite/17.0/quartus/libraries/megafunctions/altsyncram.tdf Line: 792
-Critical Warning (127003): Can't find Memory Initialization File or Hexadecimal (Intel-Format) File C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/start.mif -- setting all initial values to 0 File: C:/Users/carso/Documents/GitHub/dont_kill/sequence_drawing_module/vga_adapter/vga_adapter.v Line: 213
 Info (12021): Found 1 design units, including 1 entities, in source file db/decode_nma.tdf
     Info (12023): Found entity 1: decode_nma File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/decode_nma.tdf Line: 23
 Info (12128): Elaborating entity "decode_nma" for hierarchy "vga_adapter:VGA|altsyncram:VideoMemory|altsyncram_39m1:auto_generated|decode_nma:decode2" File: C:/Users/carso/Documents/GitHub/dont_kill/QuartusProject/db/altsyncram_39m1.tdf Line: 47
@@ -1528,10 +1527,10 @@ Info (21057): Implemented 956 device resources after synthesis - the final resou
     Info (21064): Implemented 60 RAM segments
     Info (21065): Implemented 1 PLLs
     Info (21062): Implemented 5 DSP elements
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 68 warnings
-    Info: Peak virtual memory: 766 megabytes
-    Info: Processing ended: Mon Nov 27 20:38:19 2017
-    Info: Elapsed time: 00:00:15
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 67 warnings
+    Info: Peak virtual memory: 778 megabytes
+    Info: Processing ended: Mon Nov 27 20:48:44 2017
+    Info: Elapsed time: 00:00:14
     Info: Total CPU time (on all processors): 00:00:28
 
 
