@@ -85,7 +85,7 @@ module VGA_character_drawing (
 		.enable_clear_pixels     (enable_clear_pixels     ),
 		.ld_value                (ld_value                ),
 		.next_colour             (next_colour             ),
-		.ready_to_start_character(ready_to_start_character),
+		.ready_to_start_character(ready_to_start_character)
 		//.current_state           (char_current_state      )
 	);
 

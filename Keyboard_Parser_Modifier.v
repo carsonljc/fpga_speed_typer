@@ -7,8 +7,6 @@ module Keyboard_Parser_Modifier (
 	output [7:0] comparison_data   ,
 	output [95:0] sequence_
 );
-
-	wire [95:0] sequence_;
 	wire load_sequence;
 
 Keyboard_Input_Shift i_Keyboard_Input_Shift (
@@ -59,7 +57,7 @@ module Keyboard_Input_Shift (
 			end
 		end
 
-		assign comparison_data = sequence_data[95:87];
+		assign comparison_data = sequence_data[95:88];
 endmodule
 
 
@@ -120,7 +118,7 @@ module next_level (
 		ENGINEERING 	= 96'h24_31_34_43_31_24_24_2D_43_31_34_00,
 		CONVOCATION 	= 96'h21_44_31_2A_44_21_1C_2C_43_44_31_00,
 		//12
-		X5CSEMA5F31C6 	= 96'h2E_21_1B_24_3A_1C_2E_2B_26_16_21_36,
+		X5CSEMA5F31C6 	= 96'h2E_21_1B_24_3A_1C_2E_2B_26_16_21_36;
 		
 	reg [3:0] address;
 

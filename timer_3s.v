@@ -1,6 +1,6 @@
  
 //countdown timer, for custom amounts of time
- module timer_3s(clk,q,enable,resetn,enable_next_level,timer,num_char,difficulty);//150M
+ module timer_3s(clk,q,enable,resetn,enable_next_level,num_char,difficulty);//150M
 			input clk;
 			input enable_next_level;
 			input [7:0] num_char;
