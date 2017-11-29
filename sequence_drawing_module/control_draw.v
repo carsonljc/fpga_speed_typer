@@ -22,13 +22,16 @@ module control_draw (
 );
 
     reg [4:0] current_state, next_state;
+    reg countdown_enable;
+    wire q;
 
     localparam
         S_WAIT_START = 5'd0,
             S_LOAD_VALUES = 5'd1,
                 S_LOAD_BLACK = 5'd2,
                     S_DRAW_BLACK = 5'd3,
-                        S_DRAW_BLOCK = 5'd4;
+                        S_DRAW_BLOCK = 5'd4,
+                        S_WAIT_ENABLE = 5'd5;
 
     // Next state logic aka our state table
     always@(*)
@@ -45,8 +48,9 @@ module control_draw (
                     end
                 S_LOAD_VALUES : next_state = S_DRAW_BLOCK;
                 S_LOAD_BLACK  : next_state = S_DRAW_BLACK;
+                S_WAIT_ENABLE : next_state = (q) ? S_DRAW_BLOCK : S_WAIT_ENABLE;
                 S_DRAW_BLACK  : next_state = (clear_counter[15:9] >= 66) ? S_WAIT_START : S_DRAW_BLACK;
-                S_DRAW_BLOCK  : next_state = (counter == 5'b10000) ? S_WAIT_START : S_DRAW_BLOCK;
+                S_DRAW_BLOCK  : next_state = (counter == 5'b10000) ? S_WAIT_START : S_WAIT_ENABLE;
                 default       : next_state = S_WAIT_START;
             endcase
         end // state_table
@@ -62,7 +66,7 @@ module control_draw (
             reset_counter        = 1'b0;
             enable_clear_counter = 1'b0;
             ready_to_draw        = 1'b0;
-
+            countdown_enable = 1'b0;
             case (current_state)
                 S_WAIT_START : begin
                     ready_to_draw = 1'b1;
@@ -70,6 +74,9 @@ module control_draw (
                 end
                 S_LOAD_VALUES : begin
                     ld_block = 1'b1;
+                end
+                S_WAIT_ENABLE : begin
+                    countdown_enable = 1'b1;
                 end
                 S_LOAD_BLACK : begin
                     ld_black = 1'b1;
@@ -95,6 +102,38 @@ module control_draw (
             else
                 current_state <= next_state;
         end // state_FFS
+
+RateDivider i_RateDivider (
+    .resetn(resetn),
+    .clock(clk), 
+    .q(q),
+    .countdown_enable(countdown_enable) 
+    );
+
+endmodule
+
+module RateDivider(resetn,clock,q,countdown_enable);
+input resetn;
+input clock;
+input countdown_enable;
+output reg q;
+reg [27:0]counter;
+    always @ (posedge clock)
+    begin
+        if (!resetn) begin
+            counter <= 28'd125000;
+            q <= 0;
+        end
+        else if (!counter)
+            begin
+                counter <= 28'd20000;
+                q <= 1; 
+            end
+        else if (q)
+            q <= 0;
+        else if (countdown_enable)
+            counter <= counter-1;
+    end
 endmodule
 
 
