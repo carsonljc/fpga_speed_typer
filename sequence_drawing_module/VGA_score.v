@@ -8,10 +8,11 @@ module VGA_score (
     output  [8:0] x                    ,
     output  [8:0] y                    ,
     output  [5:0] colour               ,
+    output ready_to_plot_scorebar,
     output        writeEn
     );
 
-    wire [ 8:0] counter             ;
+    wire [ 9:0] counter             ;
     wire [15:0] clear_counter       ;
     wire        ld_white            ;
     wire        ready_to_draw       ;
@@ -25,6 +26,7 @@ module VGA_score (
     wire [ 8:0] x_input             ;
     wire done_white;
 
+    assign ready_to_plot_scorebar = ready_to_draw;
     assign x_input      = 9'd10;
     assign y_input      = 9'd44;
     assign colour_input = 6'b001001;
@@ -83,7 +85,7 @@ module control_draw (
     input             resetn              ,
     input             enable_start        ,
     input             enable_clear        ,
-    input      [ 8:0] counter             ,
+    input      [ 9:0] counter             ,
     input      [15:0] clear_counter       ,
     output reg        ld_white            ,
     output reg score_increased,
@@ -97,7 +99,8 @@ module control_draw (
 );
 
     reg [4:0] current_state, next_state;
-
+    wire q;
+    reg countdown_enable;
     localparam
     S_WAIT_START = 5'd0,
     S_LOAD_VALUES = 5'd1,
@@ -105,7 +108,8 @@ module control_draw (
     S_DRAW_WHITE = 5'd3,
     S_DRAW_BLOCK = 5'd4,
     S_INCREASE_SCORE = 5'd5,
-    S_DONE_WHITE = 5'd6;
+    S_DONE_WHITE = 5'd6,
+    S_WAIT_ENABLE = 5'd7;
 
     // Next state logic aka our state table
     always@(*)
@@ -123,7 +127,8 @@ module control_draw (
                 S_LOAD_VALUES : next_state = S_DRAW_BLOCK;
                 S_LOAD_WHITE  : next_state = S_DRAW_WHITE;
                 S_DRAW_WHITE  : next_state = (clear_counter[15:9] >= 4) ? S_DONE_WHITE : S_DRAW_WHITE;
-                S_DRAW_BLOCK  : next_state = (counter[4:0] == 10) ? S_INCREASE_SCORE : S_DRAW_BLOCK;
+                S_DRAW_BLOCK  : next_state = (counter[9:5] == 10) ? S_INCREASE_SCORE : S_WAIT_ENABLE;
+                S_WAIT_ENABLE : next_state = (q) ? S_DRAW_BLOCK : S_WAIT_ENABLE;
                 S_INCREASE_SCORE : next_state = S_WAIT_START;
                 S_DONE_WHITE : next_state = S_WAIT_START;
                 default       : next_state = S_WAIT_START;
@@ -143,6 +148,7 @@ module control_draw (
             ready_to_draw        = 1'b0;
             score_increased = 1'b0;
             done_white = 1'b0;
+            countdown_enable = 1'b0;
             case (current_state)
                 S_WAIT_START : begin
                     ready_to_draw = 1'b1;
@@ -163,6 +169,9 @@ module control_draw (
                     writeEn        = 1'b1;
                     enable_counter = 1'b1;
                 end
+                S_WAIT_ENABLE : begin
+                    countdown_enable = 1'b1;
+                end
                 S_INCREASE_SCORE : begin
                     score_increased = 1'd1;
                 end
@@ -181,6 +190,14 @@ module control_draw (
             else
                 current_state <= next_state;
         end // state_FFS
+
+        RateDivider i_RateDivider (
+            .resetn          (resetn          ),
+            .clock           (clk             ),
+            .q               (q               ),
+            .countdown_enable(countdown_enable)
+        );
+
 endmodule
 
 
@@ -278,4 +295,28 @@ module datapath_draw (
             end
         end
     end // always@(posedge clk)
+endmodule
+
+module RateDivider(resetn,clock,q,countdown_enable);
+input resetn;
+input clock;
+input countdown_enable;
+output reg q;
+reg [27:0]counter;
+    always @ (posedge clock)
+    begin
+        if (!resetn) begin
+            counter <= 28'd20000;
+            q <= 0;
+        end
+        else if (!counter)
+            begin
+                counter <= 28'd20000;
+                q <= 1; 
+            end
+        else if (q)
+            q <= 0;
+        else if (countdown_enable)
+            counter <= counter-1;
+    end
 endmodule
