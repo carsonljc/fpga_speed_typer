@@ -225,6 +225,18 @@ module Keyboard_Reader (
 	end
 
 
+	always@(*)begin: plot_selection_passthrough
+		if (sequence_passthrough) begin
+			x <= x_sequence;
+			y <= y_sequence;
+			colour <= colour_sequence;
+		end
+		else if (scoreboard_passthrough) begin
+			x <= x_scoreboard;
+			y <= y_scoreboard;
+			colour <= colour_scoreboard;
+		end
+	end // plot_selection_passthrough
 /*****************************************************************************
 	*                             Sequential logic                              *
 	*****************************************************************************/
@@ -306,16 +318,13 @@ module Keyboard_Reader (
 wire [95:0] sequence_;
 
 	PS2_Controller PS2 (
-		// Inputs
 		.CLOCK_50        (clk            ),
-		.reset           (!board_resetn        ),
-		// Bidirectionals
+		.reset           (!board_resetn  ),
 		.PS2_CLK         (PS2_CLK        ),
 		.PS2_DAT         (PS2_DAT        ),
-		//Outputs
 		.received_data   (ps2_key_data   ),
 		.received_data_en(ps2_key_pressed)
-	);
+		);
 
 	Keyboard_Parser_Modifier i_Keyboard_Parser_Modifier (
 		.clk               (clk               ),
@@ -325,7 +334,7 @@ wire [95:0] sequence_;
 		.num_char          (num_char          ),
 		.sequence_         (sequence_         ),
 		.comparison_data   (comparison_data   )
-	); 
+	);  
 
 	timer_3s i_timer_3s (
 		.clk              (clk              ),
@@ -342,8 +351,8 @@ wire [95:0] sequence_;
 		.resetn                (board_resetn          ), // TODO: Check connection ! Signal/port not matching : Expecting logic  -- Found READER_STATE_WAIT_SEQUENCE_ON_SCREEN READER_STATE_WAIT_CLEAR_SEQUENCE READER_STATE_CLEAR_SEQUENCE logic
 		.num_char              (num_char              ),
 		.sequence_             (sequence_             ),
-		.x_start               (9'd10                    ),
-		.y_start               (9'd198                   ),
+		.x_start               (9'd10                 ),
+		.y_start               (9'd198                ),
 		.plot_sequence         (enable_draw_sequence  ),
 		.clear_sequence        (clear_sequence        ),
 		.writeEn               (writeEn               ),
@@ -352,6 +361,8 @@ wire [95:0] sequence_;
 		.colour                (colour                ),
 		.ready_to_plot_sequence(ready_to_plot_sequence)
 	);
+
+
 
 		// Create an Instance of a VGA controller - there can be only one!
 		// Define the number of colours as well as the initial background
