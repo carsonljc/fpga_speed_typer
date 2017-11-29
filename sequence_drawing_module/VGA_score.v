@@ -1,85 +1,4 @@
 module VGA_score (
-        CLOCK_50,                       //  On Board 50 MHz
-        // Your inputs and outputs here
-        KEY, 
-        SW,                           // On Board Keys
-        // The ports below are for the VGA output.  Do not change.
-        VGA_CLK,                        //  VGA Clock
-        VGA_HS,                         //  VGA H_SYNC
-        VGA_VS,                         //  VGA V_SYNC
-        VGA_BLANK_N,                        //  VGA BLANK
-        VGA_SYNC_N,                     //  VGA SYNC
-        VGA_R,                          //  VGA Red[9:0]
-        VGA_G,                          //  VGA Green[9:0]
-        VGA_B                           //  VGA Blue[9:0]
-    );
-
-
-    input           CLOCK_50;               //  50 MHz
-    input   [3:0]   KEY;  
-    input   [8:0]SW ;                  
-    // Declare your inputs and outputs here
-    // Do not change the following outputs
-    output          VGA_CLK;                //  VGA Clock
-    output          VGA_HS;                 //  VGA H_SYNC
-    output          VGA_VS;                 //  VGA V_SYNC
-    output          VGA_BLANK_N;                //  VGA BLANK
-    output          VGA_SYNC_N;             //  VGA SYNC
-    output  [7:0]   VGA_R;                  //  VGA Red[7:0] Changed from 10 to 8-bit DAC
-    output  [7:0]   VGA_G;                  //  VGA Green[7:0]
-    output  [7:0]   VGA_B;                  //  VGA Blue[7:0]
-    
-
-wire       resetn      ;
-wire [5:0] colour      ;
-wire [8:0] x           ;
-wire [8:0] y           ;
-wire       writeEn     ;
-wire       enable_plot_scorebar;
-wire       enable_clear_scorebar;
-
-assign resetn       = KEY[0];
-assign enable_plot_scorebar = ~KEY[1];
-assign enable_clear_scorebar = ~KEY[2];
-
-VGA_score_drawing i_VGA_score_drawing (
-    .clk         (CLOCK_50    ),
-    .resetn      (resetn      ),
-    .enable_plot_scorebar (enable_plot_scorebar),
-    .enable_clear_scorebar (enable_clear_scorebar),
-    .x(x),
-    .y(y),
-    .colour(colour),
-    .writeEn(writeEn)
-);
-
- vga_adapter VGA (
-    .resetn   (resetn     ),
-     .clock    (CLOCK_50   ),
-     .colour   (colour     ),
-     .x        (x          ),
-     .y        (y          ),
-     .plot     (writeEn    ),
-      //Signals for the DAC to drive the monitor. 
-    .VGA_R    (VGA_R      ),
-     .VGA_G    (VGA_G      ),
-    .VGA_B    (VGA_B      ),
-    .VGA_HS   (VGA_HS     ),
-    .VGA_VS   (VGA_VS     ),
-    .VGA_BLANK(VGA_BLANK_N),
-    .VGA_SYNC (VGA_SYNC_N ),
-    .VGA_CLK  (VGA_CLK    )
-);
-
-defparam VGA.RESOLUTION = "320x240";
-defparam VGA.MONOCHROME = "FALSE";
-defparam VGA.BITS_PER_COLOUR_CHANNEL = 2;
-defparam VGA.BACKGROUND_IMAGE = "vga_start.mif";
-
-endmodule // VGA_score
-
-
-module VGA_score_drawing (
     input            clk                  , // Clock
     input            resetn               , // Asynchronous reset active low
     input            enable_plot_scorebar ,
@@ -105,6 +24,7 @@ module VGA_score_drawing (
     wire [ 8:0] y_input             ;
     wire [ 8:0] x_input             ;
     wire done_white;
+
     assign x_input      = 9'd10;
     assign y_input      = 9'd44;
     assign colour_input = 6'b001001;
@@ -119,8 +39,8 @@ control_draw i_control_draw (
     .ld_white            (ld_white             ),
     .ready_to_draw       (ready_to_draw        ),
     .ld_block            (ld_block             ),
-    .done_white(done_white),
-    .score_increased (score_increased),
+    .done_white          (done_white           ),
+    .score_increased     (score_increased      ),
     .writeEn             (writeEn              ),
     .enable_counter      (enable_counter       ),
     .reset_counter       (reset_counter        ),
@@ -136,8 +56,8 @@ datapath_draw i_datapath_draw (
     .x_input             (x_input             ),
     .ld_block            (ld_block            ),
     .ld_white            (ld_white            ),
-    .score_increased (score_increased),
-    .done_white(done_white),
+    .score_increased     (score_increased     ),
+    .done_white          (done_white          ),
     .enable_counter      (enable_counter      ),
     .reset_counter       (reset_counter       ),
     .enable_clear_counter(enable_clear_counter),
@@ -147,16 +67,6 @@ datapath_draw i_datapath_draw (
     .y                   (y                   ),
     .colour              (colour              )
 );
-
-
-
-
-
-//need vga drawing
-
-
-
-
 
 
 endmodule // VGA_score_drawing
@@ -213,7 +123,7 @@ module control_draw (
                 S_LOAD_VALUES : next_state = S_DRAW_BLOCK;
                 S_LOAD_WHITE  : next_state = S_DRAW_WHITE;
                 S_DRAW_WHITE  : next_state = (clear_counter[15:9] >= 4) ? S_DONE_WHITE : S_DRAW_WHITE;
-                S_DRAW_BLOCK  : next_state = (counter[8:5] == 4) ? S_INCREASE_SCORE : S_DRAW_BLOCK;
+                S_DRAW_BLOCK  : next_state = (counter[4:0] == 10) ? S_INCREASE_SCORE : S_DRAW_BLOCK;
                 S_INCREASE_SCORE : next_state = S_WAIT_START;
                 S_DONE_WHITE : next_state = S_WAIT_START;
                 default       : next_state = S_WAIT_START;
@@ -289,7 +199,7 @@ module datapath_draw (
     input done_white,
     input score_increased,
     output reg [15:0] clear_counter       ,//
-    output reg [ 8:0] counter             ,
+    output reg [ 9:0] counter             ,
     output reg [ 8:0] x                   ,
     output reg [ 8:0] y                   ,
     output reg [ 5:0] colour
@@ -310,14 +220,14 @@ module datapath_draw (
             x_start <= 9'd10;
             y_start <= 9'd44;
             colour <= 6'b11_11_11;
-            counter       <= 5'b0;
+            counter       <= 0;
             clear_counter <= 16'b0;
         end
         else begin
             //resetting the counters for plotting
             if(reset_counter) begin
                 y_start <= 9'd44;
-                counter       <= 5'b0;
+                counter       <= 0;
                 clear_counter <= 16'b0;
             end
             else if (score_increased && x_start<300) begin
@@ -342,15 +252,15 @@ module datapath_draw (
             end
             //incrementing the counter for drawing a square
             if(enable_counter) begin
-                if(counter[4:0] >= 10) begin
-                    counter[8:5] <= counter[8:5] + 1;
+                if(counter[4:0] >= 4) begin
+                    counter[9:5] <= counter[9:5] + 1;
                     counter[4:0] <= 0;
                 end
                 else begin
                     counter <= counter + 1;
                 end
-                x       <= x_start + counter[4:0];
-                y       <= y_start + counter[8:5];
+                x       <= x_start + counter[9:5];
+                y       <= y_start + counter[4:0];
                 colour   <= colour_buffer;
             end
             //incrementing the counter for clearing bar
