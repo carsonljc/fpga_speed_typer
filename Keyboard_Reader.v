@@ -157,7 +157,7 @@ module Keyboard_Reader (
 					next_state = (last_data_received == 8'h5A) ? RESET_GAME : READER_STATE_8_FAIL;
 				end
 			RESET_GAME : next_state = READER_STATE_SELECT_DIFFICULTY;
-			default : next_state = READER_STATE_0_WAIT;
+			default : next_state = RESET_GAME;
 		endcase // current_state
 	end
 
@@ -309,8 +309,8 @@ module Keyboard_Reader (
 	*****************************************************************************/
 	assign board_resetn = KEY[0];
 	assign clk = CLOCK_50;
-	assign LEDR[0] = ps2_key_pressed;
-
+	//assign LEDR[0] = ps2_key_pressed;
+	assign LEDR[1:0] = difficulty;
 /*****************************************************************************
 	*                              Internal Modules                             *
 	*****************************************************************************/
@@ -328,7 +328,7 @@ wire [95:0] sequence_;
 
 	Keyboard_Parser_Modifier i_Keyboard_Parser_Modifier (
 		.clk               (clk               ),
-		.resetn            (board_resetn      ),
+		.resetn            (resetn      ),
 		.get_next_character(get_next_character),
 		.enable_next_level (enable_next_level ),
 		.num_char          (num_char          ),
